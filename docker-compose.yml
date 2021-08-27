@@ -1,0 +1,58 @@
+version: '3.8'
+
+volumes:
+  db_store:
+
+networks:
+  default:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    container_name: app_vue
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    ports:
+      - '8080:8080'
+    stdin_open: true
+    tty: true
+    environment:
+      - TZ=Asia/Tokyo
+    networks:
+      - default
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    container_name: api_node
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+      - /api/node_modules
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    environment:
+      - TZ=Asia/Tokyo
+      - DEBUG=api:*
+    depends_on:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql:5.7
+    env_file: ./db/.env
+    container_name: db_mysql
+    volumes:
+      - db_store:/const/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+    networks:
+      - default
