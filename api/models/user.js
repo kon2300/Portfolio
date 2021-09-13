@@ -3,6 +3,10 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
+      User.hasOne(models.Profile, {
+        as: 'user_profile',
+        foreignKey: 'user_id',
+      })
       User.hasMany(models.Article, {
         foreignKey: 'user_id',
       })
@@ -21,9 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      email_verified_at: DataTypes.DATE,
     },
     {
       sequelize,

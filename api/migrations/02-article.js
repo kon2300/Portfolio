@@ -8,12 +8,36 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      title: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      food_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
       },
-      content: {
-        allowNull: false,
+      householeditem_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      internet_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      riberalarts_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      insurance_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      entertainment_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      free_expenses: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
+      comment: {
+        allowNull: true,
         type: Sequelize.STRING,
       },
       user_id: {
