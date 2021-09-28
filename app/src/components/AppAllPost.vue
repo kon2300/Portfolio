@@ -37,7 +37,7 @@
             items-center
           "
         >
-          <div class="box-border border-4 flexr">
+          <div class="box-border border-4 flex">
             <span>name</span>
           </div>
           <div class="box-border border-4 flex">

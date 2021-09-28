@@ -1,16 +1,14 @@
 <template>
-  <div class="flex justify-end text-white pr-5">
-    <button class="btn hover:bg-yellow-400" @click="searchModalToggle">
-      検索
-    </button>
+  <div class="relative">
+    <div class="absolute justify-end text-gray-700 top-3 right-11">
+      <button class="btn btn-action" @click="searchModalToggle">検索</button>
+    </div>
+    <AppAllPost />
   </div>
-  <AppModalSearch />
-  <AppAllPost />
 </template>
 
 <script setup>
 import { useStore } from 'vuex'
-import AppModalSearch from '../components/AppModalSearch.vue'
 import AppAllPost from '../components/AppAllPost.vue'
 
 const store = useStore()

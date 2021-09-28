@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 
 const routes = [
   {
@@ -9,27 +10,36 @@ const routes = [
   {
     path: '/everybodys-posts',
     name: 'everybodys-posts',
-    component: () => import('../views/EverybodysPosts.vue'),
+    component: () => import('@/views/EverybodysPosts.vue'),
+  },
+  {
+    path: '/user-redirect/:token/:id',
+    name: 'user-redirect',
+    component: () => import('@/views/UserRedirect.vue'),
   },
   {
     path: '/user-home/:id',
     name: 'user-home',
-    component: () => import('../views/UserHome.vue'),
+    component: () => import('@/views/UserHome.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/post-article/:id',
     name: 'post-article',
-    component: () => import('../views/PostArticle.vue'),
+    component: () => import('@/views/PostArticle.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/edit-article/:id',
     name: 'edit-article',
-    component: () => import('../views/EditArticle.vue'),
+    component: () => import('@/views/EditArticle.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/edit-account/:id',
     name: 'edit-account',
-    component: () => import('../views/EditAccount.vue'),
+    component: () => import('@/views/EditAccount.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/:catchAll(.*)*',
@@ -63,6 +73,20 @@ const router = createRouter({
       })
     }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  store.commit('SET_ERROR_MESSAGE', null)
+  if (to.meta.requireAuth) {
+    if (!localStorage.getItem('token')) {
+      store.commit('SIGN_IN_MODAL_TOGGLE')
+      next({ name: 'top' })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

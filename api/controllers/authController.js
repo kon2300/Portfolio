@@ -67,7 +67,16 @@ module.exports = {
         } else {
           user.email_verified_at = new Date()
           user.save()
-          res.json({ result: true })
+          const jwtToken = jwt.sign(
+            {
+              userid: user.id,
+            },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: '60m',
+            }
+          )
+          res.redirect(`http://localhost:8080/user-redirect/${jwtToken}/${user.id}`)
         }
       }
     })
@@ -76,14 +85,14 @@ module.exports = {
     if (req.isAuthenticated()) {
       const jwtToken = jwt.sign(
         {
-          userid: req.user.id,
+          userid: req.user[0].id,
         },
         process.env.JWT_SECRET,
         {
           expiresIn: '60m',
         }
       )
-      res.json({ jwtToken: jwtToken, id: req.user.id })
+      res.redirect(`http://localhost:8080/user-redirect/${jwtToken}/${req.user[0].id}`)
     } else {
       res.json({ isAuthenticatedError: error })
     }

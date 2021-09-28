@@ -75,6 +75,7 @@ passport.use(
         defaults: {
           email: email,
           password: hashedPassword,
+          email_verified_at: new Date(),
         },
       })
         .then((user) => {
@@ -105,6 +106,7 @@ passport.use(
         defaults: {
           email: email,
           password: hashedPassword,
+          email_verified_at: new Date(),
         },
       })
         .then((user) => {
@@ -136,6 +138,7 @@ passport.use(
         defaults: {
           email: email,
           password: hashedPassword,
+          email_verified_at: new Date(),
         },
       })
         .then((user) => {
