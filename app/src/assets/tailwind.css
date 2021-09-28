@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 .btn {
-  @apply rounded-full border-2 font-bold ring-4 ring-red-400 p-1 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-y-110 hover:scale-150 active:scale-x-90;
+  @apply rounded-full border-2 font-bold ring-4 ring-yellow-600 p-1;
+}
+
+.btn-action {
+  @apply transition duration-500 transform hover:-translate-y-1;
+}
+
+.login-btn {
+  @apply border-2  ring-2 ring-gray-300 p-1 transition bg-gradient-to-r;
 }
 
 .form {
@@ -11,5 +19,5 @@
 }
 
 .active-link {
-  @apply border-b-2;
+  @apply border-b-4 border-yellow-500 text-white font-black;
 }
