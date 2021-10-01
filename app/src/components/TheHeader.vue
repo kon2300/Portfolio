@@ -35,7 +35,7 @@
         p-2
         flex
         justify-center
-        sm:justify-start sm:flex-none sm:relative sm:pl-10
+        md:justify-start md:flex-none md:relative md:pl-10
         bg-gray-900
         border-b border-yellow-600
         text-white
@@ -43,7 +43,7 @@
     >
       <div class="text-3xl font-extrabold transform -rotate-3">KAKE-BO</div>
 
-      <nav class="absolute right-2 top-1 sm:hidden">
+      <nav class="absolute right-2 top-1 md:hidden">
         <button class="btn-action" @click="otherModalToggle">
           <MenuIcon class="h-11 w-11 text-white" />
         </button>
@@ -52,13 +52,13 @@
       <nav
         class="
           hidden
-          sm:my-2
-          sm:space-x-5
-          sm:flex
-          sm:absolute
-          sm:right-10
-          sm:bottom-0
-          sm:gap-10
+          md:my-2
+          md:space-x-5
+          md:flex
+          md:absolute
+          md:right-10
+          md:bottom-0
+          md:gap-10
         "
       >
         <router-link
@@ -66,6 +66,13 @@
           :to="{ name: 'everybodys-posts' }"
           ><p>みんなの投稿</p>
           <UserGroupIcon class="h-6 w-6 text-white absolute top-0 -left-7" />
+        </router-link>
+
+        <router-link
+          class="font-bold text-xl btn-action relative"
+          :to="{ name: 'post-article', params: { id: loginUser } }"
+          ><p>投稿する</p>
+          <PencilIcon class="h-6 w-6 text-white absolute top-0 -left-7" />
         </router-link>
 
         <router-link
@@ -88,6 +95,7 @@ import { useStore } from 'vuex'
 import {
   MenuIcon,
   UserGroupIcon,
+  PencilIcon,
   HomeIcon,
   DotsCircleHorizontalIcon,
 } from '@heroicons/vue/solid'
