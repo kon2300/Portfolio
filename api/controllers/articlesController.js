@@ -4,8 +4,10 @@ module.exports = {
   postArticle: async (req, res) => {
     try {
       const result = await Article.create({
+        rent_expenses: req.body.rent_expenses,
         food_expenses: req.body.food_expenses,
         householeditem_expenses: req.body.householeditem_expenses,
+        utility_expenses: req.body.utility_expenses,
         internet_expenses: req.body.internet_expenses,
         riberalarts_expenses: req.body.riberalarts_expenses,
         insurance_expenses: req.body.insurance_expenses,
@@ -31,8 +33,10 @@ module.exports = {
     try {
       const result = await Article.update(
         {
+          rent_expenses: req.body.rent_expenses,
           food_expenses: req.body.food_expenses,
           householeditem_expenses: req.body.householeditem_expenses,
+          utility_expenses: req.body.utility_expenses,
           internet_expenses: req.body.internet_expenses,
           riberalarts_expenses: req.body.riberalarts_expenses,
           insurance_expenses: req.body.insurance_expenses,
@@ -49,7 +53,7 @@ module.exports = {
   },
   showAllArticles: async (req, res) => {
     try {
-      await Article.findAll({
+      const result = await Article.findAll({
         include: [
           {
             model: User,
@@ -65,7 +69,7 @@ module.exports = {
           },
         ],
         order: [['updatedAt', 'DESC']],
-        attributes: ['id', 'food_expenses', 'householeditem_expenses', 'internet_expenses', 'riberalarts_expenses', 'insurance_expenses', 'entertainment_expenses', 'free_expenses', 'comment', 'updatedAt'],
+        attributes: ['id', 'rent_expenses', 'food_expenses', 'householeditem_expenses', 'utility_expenses', 'internet_expenses', 'riberalarts_expenses', 'insurance_expenses', 'entertainment_expenses', 'free_expenses', 'comment', 'updatedAt'],
       })
       res.json(result)
     } catch (error) {

@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import AppUserHome from '../components/AppUserHome.vue'
+import AppUserHome from '@/components/AppUserHome.vue'
 </script>

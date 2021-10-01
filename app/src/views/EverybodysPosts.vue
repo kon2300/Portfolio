@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="absolute justify-end text-gray-700 top-3 right-11">
+    <div class="absolute justify-end text-gray-700 top-3 right-3 sm:right-11">
       <button class="btn btn-action" @click="searchModalToggle">検索</button>
     </div>
     <AppAllPost />
@@ -9,7 +9,7 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import AppAllPost from '../components/AppAllPost.vue'
+import AppAllPost from '@/components/AppAllPost.vue'
 
 const store = useStore()
 const searchModalToggle = () => store.commit('SEARCH_MODAL_TOGGLE')

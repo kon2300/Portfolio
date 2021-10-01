@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import AppFormPostArticle from '../components/AppFormPostArticle.vue'
+import AppFormPostArticle from '@/components/AppFormPostArticle.vue'
 </script>

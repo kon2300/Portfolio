@@ -15,12 +15,13 @@
 
       <div class="flex justify-center">
         <div class="fixed bg-white p-6 rounded-md shadow-2xl w-96">
-          <div class="font-mono text-2xl flex justify-center pb-3">OTHER</div>
+          <div class="font-black text-2xl flex justify-center pb-3">MENU</div>
 
           <div class="space-y-6 grid justify-items-center">
             <router-link
-              class="sm:hidden font-bold text-xl btn-action relative"
+              class="md:hidden font-bold text-xl btn-action relative"
               :to="{ name: 'everybodys-posts' }"
+              @click="otherModalToggle"
             >
               <p class="text-black">みんなの投稿</p>
               <UserGroupIcon
@@ -29,8 +30,17 @@
             </router-link>
 
             <router-link
-              class="sm:hidden font-bold text-xl btn-action relative"
+              class="md:hidden font-bold text-xl btn-action relative"
+              :to="{ name: 'post-article', params: { id: loginUser } }"
+              @click="otherModalToggle"
+              ><p class="text-black">投稿する</p>
+              <PencilIcon class="h-6 w-6 text-black absolute top-0 -left-7" />
+            </router-link>
+
+            <router-link
+              class="md:hidden font-bold text-xl btn-action relative"
               :to="{ name: 'user-home', params: { id: loginUser } }"
+              @click="otherModalToggle"
               ><p class="text-black">ホーム</p>
               <HomeIcon class="h-6 w-6 text-black absolute top-0 -left-7"
             /></router-link>
@@ -50,7 +60,12 @@
 <script setup>
 import { computed } from '@vue/reactivity'
 import { useStore } from 'vuex'
-import { XCircleIcon, UserGroupIcon, HomeIcon } from '@heroicons/vue/outline'
+import {
+  XCircleIcon,
+  UserGroupIcon,
+  PencilIcon,
+  HomeIcon,
+} from '@heroicons/vue/outline'
 
 const store = useStore()
 const otherModalState = computed(() => store.state.modal['otherModal'])
