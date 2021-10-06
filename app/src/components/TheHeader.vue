@@ -99,7 +99,7 @@ import {
   HomeIcon,
   DotsCircleHorizontalIcon,
 } from '@heroicons/vue/solid'
-import { computed } from 'vue'
+import { computed } from '@vue/runtime-core'
 
 const store = useStore()
 const signUpModalToggle = () => store.commit('SIGN_UP_MODAL_TOGGLE')

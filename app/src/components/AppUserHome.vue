@@ -24,4 +24,20 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, computed } from '@vue/runtime-core'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+
+onMounted(() => {
+  store.dispatch('showProfile')
+  const doneCreateProfile = computed(() => store.state.profile.detail)
+  if (!doneCreateProfile) {
+    router.push({ name: 'create-profile', params: { id: route.params.id } })
+  }
+})
+</script>

@@ -218,6 +218,7 @@ import { useStore } from 'vuex'
 import { useField, useForm } from 'vee-validate'
 import { postEntrySchema } from '@/include/validation'
 import {} from '@heroicons/vue/solid'
+import { computed } from '@vue/reactivity'
 
 const { errors, handleSubmit, isSubmitting } = useForm({
   validationSchema: postEntrySchema,
@@ -254,8 +255,9 @@ const { handleChange: commentHandle } = useField('comment')
 
 const store = useStore()
 
+const userId = computed(() => store.state.auth.user)
 const postArticle = handleSubmit((postData) => {
-  postData['user_id'] = store.state.auth.user
+  postData['user_id'] = userId.value
   store.dispatch('postArticle', postData)
 })
 </script>

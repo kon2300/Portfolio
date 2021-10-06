@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasOne(models.Profile, {
-        as: 'user_profile',
+        as: 'profile',
         foreignKey: 'user_id',
       })
       User.hasMany(models.Article, {
@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        onDelete: 'cascade',
       },
       email: DataTypes.STRING,
       password: DataTypes.STRING,
@@ -33,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
       underscored: true,
+      defaultScope: {
+        attributes: { exclude: ['password', 'email', 'email_verified_at', 'updatedAt', 'createdAt'] },
+      },
+      onDelete: 'CASCADE',
     }
   )
   return User

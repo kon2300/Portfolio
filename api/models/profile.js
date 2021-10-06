@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
       },
       name: DataTypes.STRING,
-      age: DataTypes.INTEGER,
-      annual_income: DataTypes.INTEGER,
+      age: DataTypes.STRING,
+      annual_income: DataTypes.STRING,
       family_members: DataTypes.STRING,
       user_id: {
         allowNull: false,
@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Profile',
       underscored: true,
+      defaultScope: {
+        attributes: { exclude: ['id', 'updatedAt', 'createdAt'] },
+      },
     }
   )
   return Profile

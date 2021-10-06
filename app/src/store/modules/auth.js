@@ -1,5 +1,5 @@
-import router from '@/router'
 import axios from 'axios'
+import router from '@/router'
 import store from '@/store'
 
 export default {

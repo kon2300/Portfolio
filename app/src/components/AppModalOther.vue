@@ -45,6 +45,14 @@
               <HomeIcon class="h-6 w-6 text-black absolute top-0 -left-7"
             /></router-link>
 
+            <router-link
+              class="font-bold text-xl btn-action relative"
+              :to="{ name: 'edit-profile', params: { id: loginUser } }"
+              @click="otherModalToggle"
+              ><p class="text-black">アカウント情報</p>
+              <UserCircleIcon class="h-6 w-6 text-black absolute top-0 -left-7"
+            /></router-link>
+
             <button class="btn btn-action" @click="logout">LOG OUT</button>
           </div>
 
@@ -64,6 +72,7 @@ import {
   XCircleIcon,
   UserGroupIcon,
   PencilIcon,
+  UserCircleIcon,
   HomeIcon,
 } from '@heroicons/vue/outline'
 

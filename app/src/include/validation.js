@@ -74,3 +74,10 @@ export const postEntrySchema = yup.object({
     .typeError('数値を入力してください'),
   comment: yup.string().required('入力は必須です'),
 })
+
+export const userSchema = yup.object({
+  name: yup.string().required('入力は必須です'),
+  age: yup.string().required('入力は必須です'),
+  annual_income: yup.string().required('入力は必須です'),
+  family_members: yup.string().required('入力は必須です'),
+})

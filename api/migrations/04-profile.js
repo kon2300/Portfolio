@@ -14,11 +14,11 @@ module.exports = {
       },
       age: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       annual_income: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       family_members: {
         allowNull: false,
@@ -28,6 +28,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.UUID,
         references: { model: 'users', key: 'id' },
+        onDelete: 'CASCADE',
       },
       created_at: {
         allowNull: false,

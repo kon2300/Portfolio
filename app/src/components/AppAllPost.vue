@@ -38,13 +38,13 @@
             "
           >
             <div class="box-border border-4 flex">
-              <span>name</span>
+              <span>name:{{ article.User.profile.name }}</span>
             </div>
             <div class="box-border border-4 flex">
-              <span>世帯人数</span>
+              <span>月収:{{ article.User.profile.annual_income }}</span>
             </div>
             <div class="box-border border-4 flex">
-              <span>月収</span>
+              <span>世帯人数:{{ article.User.profile.family_members }}</span>
             </div>
             <div class="box-border border-4 flex">
               <span>今月の合計支出</span>
@@ -109,7 +109,7 @@
 
 <script setup>
 import { ThumbUpIcon, HeartIcon, PencilIcon } from '@heroicons/vue/solid'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 
 const store = useStore()

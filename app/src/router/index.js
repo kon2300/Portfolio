@@ -30,15 +30,21 @@ const routes = [
     meta: { requireAuth: true },
   },
   {
+    path: '/create-profile/:id',
+    name: 'create-profile',
+    component: () => import('@/views/CreateProfile.vue'),
+    meta: { requireAuth: true },
+  },
+  {
     path: '/edit-article/:id',
     name: 'edit-article',
     component: () => import('@/views/EditArticle.vue'),
     meta: { requireAuth: true },
   },
   {
-    path: '/edit-account/:id',
-    name: 'edit-account',
-    component: () => import('@/views/EditAccount.vue'),
+    path: '/edit-profile/:id',
+    name: 'edit-profile',
+    component: () => import('@/views/EditProfile.vue'),
     meta: { requireAuth: true },
   },
   {
