@@ -140,7 +140,7 @@ onMounted(() => {
   store.dispatch('showProfile')
 })
 
-const profile = computed(() => store.state.profile.deteal)
+const profile = computed(() => store.state.profile.detail)
 
 setValues({
   name: profile.value.name,

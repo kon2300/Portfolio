@@ -35,7 +35,7 @@ const route = useRoute()
 
 onMounted(() => {
   store.dispatch('showProfile')
-  const doneCreateProfile = computed(() => store.state.profile.deteal)
+  const doneCreateProfile = computed(() => store.state.profile.detail)
   if (!doneCreateProfile) {
     router.push({ name: 'create-profile', params: { id: route.params.id } })
   }
