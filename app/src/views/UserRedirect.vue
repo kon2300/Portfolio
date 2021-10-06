@@ -3,17 +3,18 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted } from '@vue/runtime-core'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
+const store = useStore()
 const router = useRouter()
 const route = useRoute()
-const store = useStore()
 
 onMounted(() => {
   store.commit('SET_TOKEN', route.params.token)
   store.commit('SET_USER', route.params.id)
+  store.dispatch('showProfile')
   router.push({ name: 'user-home', params: { id: route.params.id } })
 })
 </script>

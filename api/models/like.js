@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Like',
       underscored: true,
+      defaultScope: {
+        attributes: { exclude: ['updatedAt', 'createdAt'] },
+      },
     }
   )
   return Like

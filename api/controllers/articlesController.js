@@ -54,22 +54,11 @@ module.exports = {
   showAllArticles: async (req, res) => {
     try {
       const result = await Article.findAll({
-        include: [
-          {
-            model: User,
-            attributes: ['id'],
-          },
-          {
-            model: User,
-            as: 'like',
-            attributes: ['id'],
-            through: {
-              attributes: [],
-            },
-          },
-        ],
+        include: {
+          all: true,
+          nested: true,
+        },
         order: [['updatedAt', 'DESC']],
-        attributes: ['id', 'rent_expenses', 'food_expenses', 'householeditem_expenses', 'utility_expenses', 'internet_expenses', 'riberalarts_expenses', 'insurance_expenses', 'entertainment_expenses', 'free_expenses', 'comment', 'updatedAt'],
       })
       res.json(result)
     } catch (error) {
