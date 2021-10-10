@@ -46,40 +46,42 @@ module.exports = {
   },
   verifyUser: (req, res) => {
     const userId = req.params.id
-    User.findByPk(userId).then((user) => {
-      if (!user) {
-        res.json({ error: 'このURLは正しくありません。' })
-      } else if (user.email_verified_at && !Number.isNaN(user.email_verified_at.getTime())) {
-        res.json({
-          error: 'すでに登録されています。',
-        })
-      } else {
-        const now = new Date()
-        const hash = crypto.createHash('sha1').update(user.email).digest('hex')
-        const isCorrectHash = hash === req.params.hash
-        const isExpired = now.getTime() > parseInt(req.query.expires)
-        const verificationUrl = process.env.APP_URL + req.originalUrl.split('&signature=')[0]
-        const signature = crypto.createHmac('sha256', process.env.APP_KEY).update(verificationUrl).digest('hex')
-        const isCorrectSignature = signature === req.query.signature
-
-        if (!isCorrectHash || !isCorrectSignature || isExpired) {
-          res.json({ error: 'このURLはすでに有効期限切れか、正しくありません。' })
+    User.unscoped()
+      .findByPk(userId)
+      .then((user) => {
+        if (!user) {
+          res.json({ error: 'このURLは正しくありません。' })
+        } else if (user.email_verified_at && !Number.isNaN(user.email_verified_at.getTime())) {
+          res.json({
+            error: 'すでに登録されています。',
+          })
         } else {
-          user.email_verified_at = new Date()
-          user.save()
-          const jwtToken = jwt.sign(
-            {
-              userid: user.id,
-            },
-            process.env.JWT_SECRET,
-            {
-              expiresIn: '60m',
-            }
-          )
-          res.redirect(`http://localhost:8080/user-redirect/${jwtToken}/${user.id}`)
+          const now = new Date()
+          const hash = crypto.createHash('sha1').update(user.email).digest('hex')
+          const isCorrectHash = hash === req.params.hash
+          const isExpired = now.getTime() > parseInt(req.query.expires)
+          const verificationUrl = process.env.APP_URL + req.originalUrl.split('&signature=')[0]
+          const signature = crypto.createHmac('sha256', process.env.APP_KEY).update(verificationUrl).digest('hex')
+          const isCorrectSignature = signature === req.query.signature
+
+          if (!isCorrectHash || !isCorrectSignature || isExpired) {
+            res.json({ error: 'このURLはすでに有効期限切れか、正しくありません。' })
+          } else {
+            user.email_verified_at = new Date()
+            user.save()
+            const jwtToken = jwt.sign(
+              {
+                userid: user.id,
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: '60m',
+              }
+            )
+            res.redirect(`http://localhost:8080/user-redirect/${jwtToken}/${user.id}`)
+          }
         }
-      }
-    })
+      })
   },
   isAuthenticated: (req, res) => {
     if (req.isAuthenticated()) {

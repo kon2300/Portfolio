@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      name: DataTypes.STRING,
+      age: DataTypes.STRING,
+      annual_income: DataTypes.STRING,
+      family_members: DataTypes.STRING,
       rent_expenses: DataTypes.INTEGER,
       food_expenses: DataTypes.INTEGER,
       householeditem_expenses: DataTypes.INTEGER,
@@ -47,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Article',
       underscored: true,
       defaultScope: {
-        attributes: { exclude: ['user_id', 'createdAt'] },
+        attributes: { exclude: ['createdAt'] },
       },
     }
   )
