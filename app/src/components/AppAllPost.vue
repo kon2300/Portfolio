@@ -2,7 +2,7 @@
   <div>
     <div class="p-3 flex justify-center text-3xl">みんなの投稿</div>
     <div v-for="article in allArticle" :key="article.id">
-      <div class="container mx-auto relative">
+      <div class="container mx-auto relative bg-yellow-100 mb-5">
         <div
           class="
             box-border
@@ -35,16 +35,18 @@
               grid
               justify-items-center
               items-center
+              font-bold
             "
           >
-            <div class="box-border border-4 flex">
-              <span>name:{{ article.User.profile.name }}</span>
+            <div class="box-border border-4">
+              <span class="text-xl">{{ article.name }} </span>
+              <span class="text-xs">@{{ article.user_id }}</span>
             </div>
             <div class="box-border border-4 flex">
-              <span>月収:{{ article.User.profile.annual_income }}</span>
+              <span>月収:{{ article.annual_income }}</span>
             </div>
             <div class="box-border border-4 flex">
-              <span>世帯人数:{{ article.User.profile.family_members }}</span>
+              <span>世帯人数:{{ article.family_members }}</span>
             </div>
             <div class="box-border border-4 flex">
               <span>今月の合計支出</span>
@@ -92,13 +94,43 @@
             <div class="box-boder border-4">コメント:{{ article.comment }}</div>
           </div>
 
-          <div class="absolute right-2 top-2">
-            <ThumbUpIcon class="h-6 w-6 text-white" />
+          <div v-if="article.user_id === user" class="absolute right-2 top-2">
+            <div class="flex">
+              <HeartIcon class="h-6 w-6 relative text-yellow-500" />
+              {{ Object.keys(article.like).length }}
+            </div>
           </div>
-          <!-- <div class="absolute right-2 top-2">
-          <HeartIcon class="h-6 w-6 text-red-500" />
-        </div> -->
-          <div class="absolute right-2 bottom-2">
+
+          <div
+            v-show="checkLikeArticle(article.like) && article.user_id !== user"
+          >
+            <div class="absolute right-2 top-2">
+              <div class="flex">
+                <button @click="removeLikeArticle(article.id, user)">
+                  <HeartIcon class="h-6 w-6 text-red-500" />
+                </button>
+                {{ Object.keys(article.like).length }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-show="!checkLikeArticle(article.like) && article.user_id !== user"
+          >
+            <div class="absolute right-2 top-2">
+              <div class="flex">
+                <button @click="likeArticle(article.id, user)">
+                  <ThumbUpIcon class="h-6 w-6 text-blue-300" />
+                </button>
+                {{ Object.keys(article.like).length }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-if="article.user_id === user"
+            class="absolute right-2 bottom-2"
+          >
             <PencilIcon class="h-6 w-6 text-blue-600" />
           </div>
         </div>
@@ -112,6 +144,14 @@ import { ThumbUpIcon, HeartIcon, PencilIcon } from '@heroicons/vue/solid'
 import { onMounted, computed } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 
+const user = computed(() => store.state.auth.user)
+
+const checkLikeArticle = (article_like) => {
+  article_like.some((like) => {
+    return like.id === user.value
+  })
+}
+
 const store = useStore()
 
 onMounted(() => {
@@ -119,6 +159,10 @@ onMounted(() => {
 })
 
 const allArticle = computed(() => store.state.articles['allArticle'])
+const likeArticle = (article_id, user_id) =>
+  store.dispatch('likeArticle', { article_id, user_id })
+const removeLikeArticle = (article_id, user_id) =>
+  store.dispatch('removeLikeArticle', { article_id, user_id })
 </script>
 
 <style></style>
