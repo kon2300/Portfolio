@@ -38,11 +38,11 @@ export default {
     },
     likeArticle: async ({ dispatch }, { article_id, user_id }) => {
       await axios.post(`articles/likeArticle/${article_id}/${user_id}`)
-      dispatch('showArticles')
+      dispatch('showAllArticles')
     },
     removeLikeArticle: async ({ dispatch }, { article_id, user_id }) => {
       await axios.delete(`articles/removeLikeArticle/${article_id}/${user_id}`)
-      dispatch('showArticles')
+      dispatch('showAllArticles')
     },
     removeArticle: async ({ state }) => {
       const res = await axios.delete(
