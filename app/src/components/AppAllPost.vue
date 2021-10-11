@@ -101,9 +101,7 @@
             </div>
           </div>
 
-          <div
-            v-show="checkLikeArticle(article.like) && article.user_id !== user"
-          >
+          <div v-show="checkLike(article.like) && article.user_id !== user">
             <div class="absolute right-2 top-2">
               <div class="flex">
                 <button @click="removeLikeArticle(article.id, user)">
@@ -114,9 +112,7 @@
             </div>
           </div>
 
-          <div
-            v-show="!checkLikeArticle(article.like) && article.user_id !== user"
-          >
+          <div v-show="!checkLike(article.like) && article.user_id !== user">
             <div class="absolute right-2 top-2">
               <div class="flex">
                 <button @click="likeArticle(article.id, user)">
@@ -146,8 +142,8 @@ import { useStore } from 'vuex'
 
 const user = computed(() => store.state.auth.user)
 
-const checkLikeArticle = (article_like) => {
-  article_like.some((like) => {
+const checkLike = (article) => {
+  return article.some((like) => {
     return like.id === user.value
   })
 }
