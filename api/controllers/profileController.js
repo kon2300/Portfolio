@@ -5,29 +5,30 @@ const { Profile } = require('../models')
 
 module.exports = {
   createProfile: async (req, res) => {
-    try {
-      const result = await Profile.findOrCreate({
-        where: {
-          [Op.or]: { name: req.body.name, user_id: req.params.userId },
-        },
-        defaults: {
-          name: req.body.name,
-          age: req.body.age,
-          annual_income: req.body.annual_income,
-          family_members: req.body.family_members,
-          user_id: req.params.userId,
-        },
+    await Profile.findOrCreate({
+      where: {
+        [Op.or]: { name: req.body.name, user_id: req.params.userId },
+      },
+      defaults: {
+        name: req.body.name,
+        age: req.body.age,
+        annual_income: req.body.annual_income,
+        family_members: req.body.family_members,
+        user_id: req.params.userId,
+      },
+    })
+      .then(([user, created]) => {
+        if (created) {
+          res.json(user)
+        } else {
+          res.json({
+            error: '入力された名前はすでに使用されています。他の名前にしてください。',
+          })
+        }
       })
-      if (result) {
-        res.json(result[0])
-      } else {
-        res.json({
-          error: '入力された名前はすでに使用されています。他の名前にしてください。',
-        })
-      }
-    } catch (error) {
-      res.json({ createError: error })
-    }
+      .catch((error) => {
+        res.json({ createError: error })
+      })
   },
   showProfile: async (req, res) => {
     try {

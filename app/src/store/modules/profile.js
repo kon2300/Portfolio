@@ -17,7 +17,12 @@ export default {
       const res = await axios.post(`profile/${store.state.auth.user}`, postData)
       store.commit('SET_ERROR_MESSAGE', res.data.error)
       commit('SET_DETAIL', res.data)
-      router.push({ name: 'user-home', params: { id: store.state.auth.user } })
+      if (!store.state.auth.error) {
+        router.push({
+          name: 'user-home',
+          params: { id: store.state.auth.user },
+        })
+      }
     },
     updateProfile: async (_, postData) => {
       const res = await axios.put(`profile/${store.state.auth.user}`, postData)

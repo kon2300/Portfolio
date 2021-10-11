@@ -4,11 +4,11 @@ import store from '@/store'
 
 export default {
   state: {
-    jwtToken: '',
+    jwtToken: undefined,
     user: {
-      userid: 'null',
+      userid: undefined,
     },
-    error: '',
+    error: undefined,
   },
   mutations: {
     SET_TOKEN(state, value) {

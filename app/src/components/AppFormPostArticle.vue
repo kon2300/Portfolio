@@ -217,8 +217,8 @@
 import { useStore } from 'vuex'
 import { useField, useForm } from 'vee-validate'
 import { postEntrySchema } from '@/include/validation'
-import {} from '@heroicons/vue/solid'
-import { computed } from '@vue/reactivity'
+import { onMounted, computed } from '@vue/runtime-core'
+import { useRoute, useRouter } from 'vue-router'
 
 const { errors, handleSubmit, isSubmitting } = useForm({
   validationSchema: postEntrySchema,
@@ -254,10 +254,29 @@ const { handleChange: freeExpensesHandle } = useField('free_expenses')
 const { handleChange: commentHandle } = useField('comment')
 
 const store = useStore()
+const router = useRouter()
+const route = useRoute()
 
-const userId = computed(() => store.state.auth.user)
+onMounted(() => {
+  store.dispatch('showProfile')
+  const doneCreateProfile = computed(() => store.state.profile.detail)
+  if (!doneCreateProfile.value) {
+    router.push({ name: 'create-profile', params: { id: route.params.id } })
+  }
+})
+
+const userId = computed(() => store.state.profile.detail.user_id)
+const name = computed(() => store.state.profile.detail.name)
+const age = computed(() => store.state.profile.detail.age)
+const annual_income = computed(() => store.state.profile.detail.annual_income)
+const family_members = computed(() => store.state.profile.detail.family_members)
 const postArticle = handleSubmit((postData) => {
   postData['user_id'] = userId.value
+  postData['name'] = name.value
+  postData['age'] = age.value
+  postData['annual_income'] = annual_income.value
+  postData['family_members'] = family_members.value
+  console.log(postData)
   store.dispatch('postArticle', postData)
 })
 </script>

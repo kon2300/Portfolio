@@ -4,6 +4,10 @@ module.exports = {
   postArticle: async (req, res) => {
     try {
       const result = await Article.create({
+        name: req.body.name,
+        age: req.body.age,
+        annual_income: req.body.annual_income,
+        family_members: req.body.family_members,
         rent_expenses: req.body.rent_expenses,
         food_expenses: req.body.food_expenses,
         householeditem_expenses: req.body.householeditem_expenses,
@@ -54,10 +58,16 @@ module.exports = {
   showAllArticles: async (req, res) => {
     try {
       const result = await Article.findAll({
-        include: {
-          all: true,
-          nested: true,
-        },
+        include: [
+          {
+            model: User,
+            as: 'like',
+            attributes: ['id'],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
         order: [['updatedAt', 'DESC']],
       })
       res.json(result)
@@ -92,7 +102,7 @@ module.exports = {
       const result = await Like.destroy({
         where: { article_id: req.params.articleId, user_id: req.params.userId },
       })
-      res.json({ success: like })
+      res.json({ result })
     } catch (error) {
       res.json({ removeLikeArticleError: error })
     }

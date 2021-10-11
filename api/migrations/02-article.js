@@ -8,6 +8,22 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      age: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      annual_income: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      family_members: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       rent_expenses: {
         allowNull: true,
         type: Sequelize.INTEGER,
