@@ -1,11 +1,17 @@
-const { User, Article, Like, Profile } = require('../models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const { User, Article, Like } = require('../models')
 
 module.exports = {
   postArticle: async (req, res) => {
-    try {
-      const result = await Article.create({
+    await Article.findOrCreate({
+      where: {
+        [Op.and]: { user_id: req.body.user_id, time: req.body.time },
+      },
+      defaults: {
         name: req.body.name,
         age: req.body.age,
+        time: req.body.time,
         annual_income: req.body.annual_income,
         family_members: req.body.family_members,
         rent_expenses: req.body.rent_expenses,
@@ -19,11 +25,20 @@ module.exports = {
         free_expenses: req.body.free_expenses,
         comment: req.body.comment,
         user_id: req.body.user_id,
+      },
+    })
+      .then(([result, created]) => {
+        if (created) {
+          res.json(result)
+        } else {
+          res.json({
+            error: 'この日付はすでに投稿済みです',
+          })
+        }
       })
-      res.json(result)
-    } catch (error) {
-      res.json({ postArticleError: error })
-    }
+      .catch((error) => {
+        res.json({ postArticleError: error })
+      })
   },
   editArticle: async (req, res) => {
     try {
@@ -53,6 +68,21 @@ module.exports = {
       res.json(result)
     } catch (error) {
       res.json({ updateArticleError: error })
+    }
+  },
+  showMyArticles: async (req, res) => {
+    try {
+      const result = await Article.findAll({
+        where: { user_id: req.params.userId },
+        order: [['updatedAt', 'DESC']],
+        attributes: {
+          exclude: ['age', 'annual_income', 'family_members', 'id', 'name', 'updatedAt', 'user_id', 'comment'],
+        },
+      })
+      console.log(result)
+      res.json(result)
+    } catch (error) {
+      res.json({ showArticlesError: error })
     }
   },
   showAllArticles: async (req, res) => {

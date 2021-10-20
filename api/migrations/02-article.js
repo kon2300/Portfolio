@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      time: {
+        allowNull: false,
+        type: Sequelize.JSON,
+      },
       annual_income: {
         allowNull: false,
         type: Sequelize.STRING,

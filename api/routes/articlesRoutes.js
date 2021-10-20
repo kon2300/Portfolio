@@ -8,15 +8,14 @@ router.put('/:articleId', articlesController.updateArticle)
 
 router.delete('/:articleId', articlesController.removeArticle)
 
+router.get('/showMyArticles/:userId', articlesController.showMyArticles)
+
 router.get('/showAllArticles', articlesController.showAllArticles)
 
 router.get('/editArticle/:articleId', articlesController.editArticle)
 
 router.post('/likeArticle/:articleId/:userId', articlesController.likeArticle)
 
-router.delete(
-  '/removeLikeArticle/:articleId/:userId',
-  articlesController.removeLikeArticle
-)
+router.delete('/removeLikeArticle/:articleId/:userId', articlesController.removeLikeArticle)
 
 module.exports = router

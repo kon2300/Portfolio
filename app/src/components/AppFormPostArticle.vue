@@ -8,6 +8,24 @@
       </div>
       <form @submit="postArticle" class="space-y-6">
         <div>
+          <label for="time" class="block text-sm font-bold text-gray-700"
+            >日付</label
+          >
+          <select class="form" name="time" @change="timeHandle">
+            <option value="">選択してください</option>
+            <option v-for="time in getTime" :key="time.id" :value="time.value">
+              {{ `${time.value.year}年 / ${time.value.month}月` }}
+            </option>
+          </select>
+          <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+            {{ errors.time }}
+          </p>
+          <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+            {{ error ? '日付を変更してください' : '' }}
+          </p>
+        </div>
+
+        <div>
           <label
             for="rent_expenses"
             class="block text-sm font-bold text-gray-700"
@@ -19,7 +37,7 @@
             min="0"
             step="1000"
             name="rent_expenses"
-            value="3000"
+            value="0"
             @change="rentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -207,6 +225,9 @@
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
             {{ Object.keys(errors).length ? '入力に誤りがあります' : '' }}
           </p>
+          <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+            {{ error }}
+          </p>
         </div>
       </form>
     </div>
@@ -219,6 +240,7 @@ import { useField, useForm } from 'vee-validate'
 import { postEntrySchema } from '@/include/validation'
 import { onMounted, computed } from '@vue/runtime-core'
 import { useRoute, useRouter } from 'vue-router'
+import { getNow } from '@/include/selectValues'
 
 const { errors, handleSubmit, isSubmitting } = useForm({
   validationSchema: postEntrySchema,
@@ -236,6 +258,11 @@ const { errors, handleSubmit, isSubmitting } = useForm({
   },
 })
 
+const getTime = computed(() => {
+  return getNow()
+})
+
+const { handleChange: timeHandle } = useField('time')
 const { handleChange: rentExpensesHandle } = useField('rent_expenses')
 const { handleChange: foodExpensesHandle } = useField('food_expenses')
 const { handleChange: householeditemExpensesHandle } = useField(
@@ -279,4 +306,5 @@ const postArticle = handleSubmit((postData) => {
   console.log(postData)
   store.dispatch('postArticle', postData)
 })
+const error = computed(() => store.state.auth['error'])
 </script>
