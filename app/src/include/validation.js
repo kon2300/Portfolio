@@ -27,6 +27,7 @@ export const signUpSchema = yup.object({
 })
 
 export const postEntrySchema = yup.object({
+  time: yup.object().required('入力は必須です'),
   rent_expenses: yup
     .number()
     .min(0, '0以上で入力してください')

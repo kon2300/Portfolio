@@ -1,9 +1,11 @@
 import axios from 'axios'
 import router from '@/router'
+import store from '@/store'
 
 export default {
   state: {
     allArticle: [],
+    myArticle: [],
     originalArticle: [],
   },
   mutations: {
@@ -13,12 +15,18 @@ export default {
     SET_ORIGINAL_ARTICLE(state, value) {
       state.originalArticle = value
     },
+    SET_MY_ARTICLE(state, value) {
+      state.myArticle = value
+    },
   },
   getters: {},
   actions: {
     postArticle: async (_, postData) => {
-      await axios.post('articles/create', postData)
-      router.push({ name: 'everybodys-posts' })
+      const res = await axios.post('articles/create', postData)
+      store.commit('SET_ERROR_MESSAGE', res.data.error)
+      if (!store.state.auth.error) {
+        router.push({ name: 'everybodys-posts' })
+      }
     },
     updateArticle: async ({ state }, postData) => {
       await axios.put(
@@ -26,6 +34,11 @@ export default {
         postData
       )
       router.push({ name: 'everybodys-posts' })
+    },
+    showMyArticles: async ({ commit }, user_id) => {
+      const res = await axios.get(`articles/showMyArticles/${user_id}`)
+      console.log(res.data)
+      commit('SET_MY_ARTICLE', res.data)
     },
     showAllArticles: async ({ commit }) => {
       const res = await axios.get('articles/showAllArticles')

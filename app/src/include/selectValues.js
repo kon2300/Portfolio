@@ -24,3 +24,34 @@ export const selectFamilyMembers = [
   { id: '夫婦 + 子3人', value: '夫婦 + 子3人' },
   { id: '夫婦 + 子4人以上', value: '夫婦 + 子4人以上' },
 ]
+
+export const getNow = () => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  if (month === 1) {
+    return [
+      {
+        id: { year: year - 1, month: month + 11 },
+        value: { year: year - 1, month: month + 11 },
+      },
+      { id: { year, month }, value: { year, month } },
+      { id: { year, month: month + 1 }, value: { year, month: month + 1 } },
+    ]
+  } else if (month === 12) {
+    return [
+      { id: { year, month: month - 1 }, value: { year, month: month - 1 } },
+      { id: { year, month }, value: { year, month } },
+      {
+        id: { year: year + 1, month: month - 11 },
+        value: { year: year + 1, month: month - 11 },
+      },
+    ]
+  } else {
+    return [
+      { id: { year, month: month - 1 }, value: { year, month: month - 1 } },
+      { id: { year, month }, value: { year, month } },
+      { id: { year, month: month + 1 }, value: { year, month: month + 1 } },
+    ]
+  }
+}

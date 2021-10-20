@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       age: DataTypes.STRING,
+      time: DataTypes.JSON,
       annual_income: DataTypes.STRING,
       family_members: DataTypes.STRING,
       rent_expenses: DataTypes.INTEGER,
@@ -43,6 +44,15 @@ module.exports = (sequelize, DataTypes) => {
             tableName: 'users',
             key: 'id',
           },
+        },
+      },
+      total_expenses: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return this.rent_expenses + this.food_expenses + this.householeditem_expenses + this.utility_expenses + this.internet_expenses + this.riberalarts_expenses + this.insurance_expenses + this.entertainment_expenses + this.free_expenses
+        },
+        set(value) {
+          throw new Error('Do not try to set the `total_expenses` value!')
         },
       },
     },
