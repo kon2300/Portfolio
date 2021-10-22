@@ -134,7 +134,9 @@
               v-if="article.user_id === user"
               class="absolute right-2 bottom-2"
             >
-              <PencilIcon class="h-6 w-6 text-blue-600" />
+              <button @click="editArticle(article.id)">
+                <PencilIcon class="h-6 w-6 text-blue-600" />
+              </button>
             </div>
           </div>
         </div>
@@ -148,6 +150,7 @@ import { ThumbUpIcon, HeartIcon, PencilIcon } from '@heroicons/vue/solid'
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import { renderChartDougnut } from '@/include/chart'
+import router from '../router'
 
 const store = useStore()
 onMounted(() => {
@@ -188,6 +191,10 @@ const likeArticle = (article_id, user_id) => {
 const removeLikeArticle = (article_id, user_id) => {
   store.commit('DESTROY_CHART')
   store.dispatch('removeLikeArticle', { article_id, user_id })
+}
+
+const editArticle = (article_id) => {
+  router.push({ name: 'edit-article-redirect', params: { id: article_id } })
 }
 </script>
 
