@@ -4,16 +4,25 @@
       class="grid bg-white p-6 rounded-md shadow-2xl w-2/3 md:w-1/2 lg:w-1/3"
     >
       <div class="font-mono text-2xl text-gray-600 flex justify-center pb-3">
-        家計簿の投稿
+        投稿した家計簿の編集
       </div>
-      <form @submit="postArticle" class="space-y-6">
+      <form @submit="updateArticle" class="space-y-6">
         <div>
           <label for="time" class="block text-sm font-bold text-gray-700"
             >日付</label
           >
-          <select class="form" name="time" @change="timeHandle">
-            <option value="" disabled selected>選択してください</option>
-            <option v-for="time in getTime" :key="time.id" :value="time.value">
+          <select
+            class="form bg-gray-200"
+            name="time"
+            v-model="originalArticle.time"
+            @input="timeHandle"
+          >
+            <option
+              v-for="time in getTime"
+              :key="time.id"
+              :value="time.value"
+              disabled
+            >
               {{ `${time.value.year}年 / ${time.value.month}月` }}
             </option>
           </select>
@@ -37,7 +46,7 @@
             min="0"
             step="1000"
             name="rent_expenses"
-            value="0"
+            v-model="originalArticle.rent_expenses"
             @change="rentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -57,7 +66,7 @@
             min="0"
             step="1000"
             name="food_expenses"
-            value="0"
+            v-model="originalArticle.food_expenses"
             @change="foodExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -77,7 +86,7 @@
             min="0"
             step="1000"
             name="householeditem_expenses"
-            value="0"
+            v-model="originalArticle.householeditem_expenses"
             @change="householeditemExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -97,7 +106,7 @@
             min="0"
             step="1000"
             name="utility_expenses"
-            value="0"
+            v-model="originalArticle.utility_expenses"
             @change="utilityExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -117,7 +126,7 @@
             min="0"
             step="1000"
             name="internet_expenses"
-            value="0"
+            v-model="originalArticle.internet_expenses"
             @change="internetExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -137,7 +146,7 @@
             min="0"
             step="1000"
             name="riberalarts_expenses"
-            value="0"
+            v-model="originalArticle.riberalarts_expenses"
             @change="riberalartsExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -157,7 +166,7 @@
             min="0"
             step="1000"
             name="insurance_expenses"
-            value="0"
+            v-model="originalArticle.insurance_expenses"
             @change="insuranceExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -177,7 +186,7 @@
             min="0"
             step="1000"
             name="entertainment_expenses"
-            value="0"
+            v-model="originalArticle.entertainment_expenses"
             @change="entertainmentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -197,7 +206,7 @@
             min="0"
             step="1000"
             name="free_expenses"
-            value="0"
+            v-model="originalArticle.free_expenses"
             @change="freeExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -213,6 +222,7 @@
             class="form"
             type="text"
             name="comment"
+            v-model="originalArticle.comment"
             @change="commentHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -239,11 +249,11 @@
 import { useStore } from 'vuex'
 import { useField, useForm } from 'vee-validate'
 import { postEntrySchema } from '@/include/validation'
-import { onMounted, computed } from '@vue/runtime-core'
+import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useRoute, useRouter } from 'vue-router'
 import { getNow } from '@/include/selectValues'
 
-const { errors, handleSubmit, isSubmitting, values } = useForm({
+const { errors, handleSubmit, isSubmitting, values, setValues } = useForm({
   validationSchema: postEntrySchema,
   initialValues: {
     rent_expenses: '0',
@@ -293,15 +303,33 @@ onMounted(() => {
   }
 })
 
+onUpdated(() => {})
+
+const originalArticle = computed(() => store.state.articles.originalArticle)
+
+setValues({
+  time: originalArticle.value.time,
+  rent_expenses: originalArticle.value.rent_expenses,
+  food_expenses: originalArticle.value.food_expenses,
+  householeditem_expenses: originalArticle.value.householeditem_expenses,
+  utility_expenses: originalArticle.value.utility_expenses,
+  riberalarts_expenses: originalArticle.value.riberalarts_expenses,
+  internet_expenses: originalArticle.value.internet_expenses,
+  insurance_expenses: originalArticle.value.internet_expenses,
+  entertainment_expenses: originalArticle.value.entertainment_expenses,
+  free_expenses: originalArticle.value.free_expenses,
+  comment: originalArticle.value.comment,
+})
+
 const detail = computed(() => store.state.profile.detail)
-const postArticle = handleSubmit((postData) => {
+const updateArticle = handleSubmit((postData) => {
   postData['user_id'] = detail.value.user_id
   postData['name'] = detail.value.name
   postData['age'] = detail.value.age
   postData['annual_income'] = detail.value.annual_income
   postData['family_members'] = detail.value.family_members
   console.log(postData)
-  store.dispatch('postArticle', postData)
+  store.dispatch('updateArticle', postData)
 })
 const error = computed(() => store.state.auth['error'])
 </script>

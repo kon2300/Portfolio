@@ -29,10 +29,7 @@ export default {
       }
     },
     updateArticle: async ({ state }, postData) => {
-      await axios.put(
-        `articles/updateArticle/${state.originalArticle.id}`,
-        postData
-      )
+      await axios.put(`articles/${state.originalArticle.id}`, postData)
       router.push({ name: 'everybodys-posts' })
     },
     showMyArticles: async ({ commit }, user_id) => {
@@ -47,7 +44,8 @@ export default {
     },
     editArticle: async ({ commit }, article_id) => {
       const res = await axios.get(`articles/editArticle/${article_id}`)
-      commit('SET_ORIGINAL_ARTICLE', res.data.article)
+      console.log(res.data)
+      commit('SET_ORIGINAL_ARTICLE', res.data)
     },
     likeArticle: async ({ dispatch }, { article_id, user_id }) => {
       await axios.post(`articles/likeArticle/${article_id}/${user_id}`)

@@ -84,6 +84,7 @@ const loginUser = computed(() => store.state.auth.user)
 
 const logout = () => {
   store.dispatch('logout')
+  store.commit('DESTROY_CHART')
   store.commit('OTHER_MODAL_TOGGLE')
 }
 </script>

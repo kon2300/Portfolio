@@ -18,6 +18,11 @@ const routes = [
     component: () => import('@/views/UserRedirect.vue'),
   },
   {
+    path: '/edit-article-redirect/:id',
+    name: 'edit-article-redirect',
+    component: () => import('@/views/EditArticleRedirect.vue'),
+  },
+  {
     path: '/user-home/:id',
     name: 'user-home',
     component: () => import('@/views/UserHome.vue'),

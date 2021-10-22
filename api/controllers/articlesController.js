@@ -52,6 +52,11 @@ module.exports = {
     try {
       const result = await Article.update(
         {
+          name: req.body.name,
+          age: req.body.age,
+          time: req.body.time,
+          annual_income: req.body.annual_income,
+          family_members: req.body.family_members,
           rent_expenses: req.body.rent_expenses,
           food_expenses: req.body.food_expenses,
           householeditem_expenses: req.body.householeditem_expenses,
@@ -62,6 +67,7 @@ module.exports = {
           entertainment_expenses: req.body.entertainment_expenses,
           free_expenses: req.body.free_expenses,
           comment: req.body.comment,
+          user_id: req.body.user_id,
         },
         { where: { id: req.params.articleId } }
       )

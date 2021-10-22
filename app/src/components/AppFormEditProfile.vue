@@ -12,11 +12,12 @@
             >名前</label
           >
           <input
-            class="form"
+            class="form bg-gray-200"
             type="text"
             name="name"
-            :value="profile.name"
+            v-model="profile.name"
             @change="nameHandle"
+            disabled
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
             {{ errors.name }}
@@ -30,7 +31,7 @@
           <select
             class="form"
             name="age"
-            :value="profile.age"
+            v-model="profile.age"
             @change="ageHandle"
           >
             <option
@@ -55,7 +56,7 @@
           <select
             class="form"
             name="annual_income"
-            :value="profile.annual_income"
+            v-model="profile.annual_income"
             @change="annualIncomeHandle"
           >
             <option
@@ -80,7 +81,7 @@
           <select
             class="form"
             name="family_members"
-            :value="profile.family_members"
+            v-model="profile.family_members"
             @change="familyMembersHandle"
           >
             <option
