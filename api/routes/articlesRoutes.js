@@ -10,6 +10,8 @@ router.delete('/:articleId', articlesController.removeArticle)
 
 router.get('/showMyArticles/:userId', articlesController.showMyArticles)
 
+router.get('/showMyAllArticles/:userId', articlesController.showMyAllArticles)
+
 router.get('/showAllArticles', articlesController.showAllArticles)
 
 router.get('/editArticle/:articleId', articlesController.editArticle)

@@ -13,14 +13,14 @@ const routes = [
     component: () => import('@/views/EverybodysPosts.vue'),
   },
   {
+    path: '/past-post/:id',
+    name: 'past-post',
+    component: () => import('@/views/PastPosts.vue'),
+  },
+  {
     path: '/user-redirect/:token/:id',
     name: 'user-redirect',
     component: () => import('@/views/UserRedirect.vue'),
-  },
-  {
-    path: '/edit-article-redirect/:id',
-    name: 'edit-article-redirect',
-    component: () => import('@/views/EditArticleRedirect.vue'),
   },
   {
     path: '/user-home/:id',
@@ -45,12 +45,19 @@ const routes = [
     name: 'edit-article',
     component: () => import('@/views/EditArticle.vue'),
     meta: { requireAuth: true },
+    beforeEnter: (to, from) => {
+      store.dispatch('editArticle', to.params.id)
+      console.log(to.params.id)
+    },
   },
   {
     path: '/edit-profile/:id',
     name: 'edit-profile',
     component: () => import('@/views/EditProfile.vue'),
     meta: { requireAuth: true },
+    beforeEnter: (to, from) => {
+      store.dispatch('showProfile')
+    },
   },
   {
     path: '/:catchAll(.*)*',

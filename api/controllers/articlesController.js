@@ -88,7 +88,28 @@ module.exports = {
       console.log(result)
       res.json(result)
     } catch (error) {
-      res.json({ showArticlesError: error })
+      res.json({ showMyArticlesError: error })
+    }
+  },
+  showMyAllArticles: async (req, res) => {
+    try {
+      const result = await Article.findAll({
+        where: { user_id: req.params.userId },
+        include: [
+          {
+            model: User,
+            as: 'like',
+            attributes: ['id'],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+        order: [['updatedAt', 'DESC']],
+      })
+      res.json(result)
+    } catch (error) {
+      res.json({ showMyAllArticlesError: error })
     }
   },
   showAllArticles: async (req, res) => {
