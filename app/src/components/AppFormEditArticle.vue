@@ -305,7 +305,7 @@ onMounted(() => {
 
 onUpdated(() => {})
 
-const originalArticle = computed(() => store.state.articles.originalArticle)
+const originalArticle = computed(() => store.state.articles.article)
 
 setValues({
   time: originalArticle.value.time,

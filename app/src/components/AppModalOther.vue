@@ -47,6 +47,14 @@
 
             <router-link
               class="font-bold text-xl btn-action relative"
+              :to="{ name: 'past-post', params: { id: loginUser } }"
+              @click="otherModalToggle"
+              ><p class="text-black">過去の投稿</p>
+              <ArchiveIcon class="h-6 w-6 text-black absolute top-0 -left-7"
+            /></router-link>
+
+            <router-link
+              class="font-bold text-xl btn-action relative"
               :to="{ name: 'edit-profile', params: { id: loginUser } }"
               @click="otherModalToggle"
               ><p class="text-black">アカウント情報</p>
@@ -74,6 +82,7 @@ import {
   PencilIcon,
   UserCircleIcon,
   HomeIcon,
+  ArchiveIcon,
 } from '@heroicons/vue/outline'
 
 const store = useStore()

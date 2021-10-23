@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-3 flex justify-center text-3xl">みんなの投稿</div>
+    <div class="p-3 flex justify-center text-3xl">過去の投稿</div>
     <div v-for="article in allArticle" :key="article.id">
       <div class="container mx-auto relative bg-yellow-100 mb-10">
         <div
@@ -108,28 +108,6 @@
               </div>
             </div>
 
-            <div v-show="checkLike(article.like) && article.user_id !== user">
-              <div class="absolute right-2 top-2">
-                <div class="flex">
-                  <button @click="removeLikeArticle(article.id, user)">
-                    <HeartIcon class="h-6 w-6 text-red-500" />
-                  </button>
-                  {{ Object.keys(article.like).length }}
-                </div>
-              </div>
-            </div>
-
-            <div v-show="!checkLike(article.like) && article.user_id !== user">
-              <div class="absolute right-2 top-2">
-                <div class="flex">
-                  <button @click="likeArticle(article.id, user)">
-                    <ThumbUpIcon class="h-6 w-6 text-blue-300" />
-                  </button>
-                  {{ Object.keys(article.like).length }}
-                </div>
-              </div>
-            </div>
-
             <div
               v-if="article.user_id === user"
               class="absolute right-2 bottom-2"
@@ -154,7 +132,7 @@ import router from '../router'
 
 const store = useStore()
 onMounted(() => {
-  store.dispatch('showAllArticles')
+  store.dispatch('showMyAllArticle', user.value)
 })
 onUpdated(() => {
   allArticle.value.forEach((article) => {
@@ -176,22 +154,8 @@ onUpdated(() => {
   })
 })
 
-const allArticle = computed(() => store.state.articles['allArticle'])
+const allArticle = computed(() => store.state.articles['myAllArticle'])
 const user = computed(() => store.state.auth.user)
-const checkLike = (article) => {
-  return article.some((like) => {
-    return like.id === user.value
-  })
-}
-const likeArticle = (article_id, user_id) => {
-  store.commit('DESTROY_CHART')
-  store.dispatch('likeArticle', { article_id, user_id })
-}
-
-const removeLikeArticle = (article_id, user_id) => {
-  store.commit('DESTROY_CHART')
-  store.dispatch('removeLikeArticle', { article_id, user_id })
-}
 
 const editArticle = (article_id) => {
   router.push({ name: 'edit-article', params: { id: article_id } })

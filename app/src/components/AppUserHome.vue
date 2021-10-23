@@ -50,7 +50,7 @@ onMounted(() => {
   }
   store.dispatch('showMyArticles', user.value)
 })
-const myArticles = computed(() => store.state.articles.myArticle)
+const myArticles = computed(() => store.state.articles.article)
 
 onUpdated(() => {
   const totalSpendingData = Object.values(myArticles.value).reduce(

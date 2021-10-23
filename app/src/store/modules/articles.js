@@ -5,18 +5,18 @@ import store from '@/store'
 export default {
   state: {
     allArticle: [],
-    myArticle: [],
-    originalArticle: [],
+    myAllArticle: [],
+    article: [],
   },
   mutations: {
     SET_ALL_ARTICLE(state, value) {
       state.allArticle = value
     },
-    SET_ORIGINAL_ARTICLE(state, value) {
-      state.originalArticle = value
+    SET_MY_ALL_ARTICLE(state, value) {
+      state.myAllArticle = value
     },
-    SET_MY_ARTICLE(state, value) {
-      state.myArticle = value
+    SET_ARTICLE(state, value) {
+      state.article = value
     },
   },
   getters: {},
@@ -35,7 +35,12 @@ export default {
     showMyArticles: async ({ commit }, user_id) => {
       const res = await axios.get(`articles/showMyArticles/${user_id}`)
       console.log(res.data)
-      commit('SET_MY_ARTICLE', res.data)
+      commit('SET_ARTICLE', res.data)
+    },
+    showMyAllArticle: async ({ commit }, user_id) => {
+      const res = await axios.get(`articles/showMyAllArticles/${user_id}`)
+      console.log(res.data)
+      commit('SET_MY_ALL_ARTICLE', res.data)
     },
     showAllArticles: async ({ commit }) => {
       const res = await axios.get('articles/showAllArticles')
@@ -45,7 +50,7 @@ export default {
     editArticle: async ({ commit }, article_id) => {
       const res = await axios.get(`articles/editArticle/${article_id}`)
       console.log(res.data)
-      commit('SET_ORIGINAL_ARTICLE', res.data)
+      commit('SET_ARTICLE', res.data)
     },
     likeArticle: async ({ dispatch }, { article_id, user_id }) => {
       await axios.post(`articles/likeArticle/${article_id}/${user_id}`)
