@@ -18,29 +18,81 @@
         <div class="fixed grid bg-white p-6 rounded-md shadow-2xl w-96 z-50">
           <div class="font-mono text-2xl flex justify-center pb-3">検索</div>
 
-          <form @submit="search" class="space-y-6">
+          <form @submit="searchArticles" class="space-y-6">
             <div>
-              <label for="annualIncome" class="block text-sm font-bold">
-                年収
-              </label>
-              <input
+              <label for="age" class="block text-sm font-bold text-gray-700"
+                >年齢</label
+              >
+              <select
                 class="form"
-                type="number"
-                name="annualIncome"
-                @change="annualIncomeHandle"
-              />
+                name="age"
+                v-model="values.age"
+                @change="ageHandle"
+              >
+                <option value="" disabled selected>選択してください</option>
+                <option
+                  v-for="selectAge in selectAges"
+                  :key="selectAge.id"
+                  :value="selectAge.id"
+                >
+                  {{ selectAge.value }}
+                </option>
+              </select>
+              <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+                {{ errors.age }}
+              </p>
             </div>
 
             <div>
-              <label for="familyMembers" class="block text-sm font-bold">
-                家族構成
-              </label>
-              <input
+              <label
+                for="annual_income"
+                class="block text-sm font-bold text-gray-700"
+                >世帯年収</label
+              >
+              <select
                 class="form"
-                type="number"
-                name="familyMembers"
+                name="annual_income"
+                v-model="values.annual_income"
+                @change="annualIncomeHandle"
+              >
+                <option value="" disabled selected>選択してください</option>
+                <option
+                  v-for="selectAnnualIncom in selectAnnualIncoms"
+                  :key="selectAnnualIncom.id"
+                  :value="selectAnnualIncom.id"
+                >
+                  {{ selectAnnualIncom.value }}
+                </option>
+              </select>
+              <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+                {{ errors.annual_income }}
+              </p>
+            </div>
+
+            <div>
+              <label
+                for="family_members"
+                class="block text-sm font-bold text-gray-700"
+                >家族構成</label
+              >
+              <select
+                class="form"
+                name="family_members"
+                v-model="values.family_members"
                 @change="familyMembersHandle"
-              />
+              >
+                <option value="" disabled selected>選択してください</option>
+                <option
+                  v-for="selectFamilyMember in selectFamilyMembers"
+                  :key="selectFamilyMember.id"
+                  :value="selectFamilyMember.id"
+                >
+                  {{ selectFamilyMember.value }}
+                </option>
+              </select>
+              <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+                {{ errors.family_members }}
+              </p>
             </div>
 
             <div class="flex justify-center">
@@ -61,20 +113,32 @@ import { computed } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import { XCircleIcon } from '@heroicons/vue/solid'
 import { useField, useForm } from 'vee-validate'
+import {
+  selectAges,
+  selectAnnualIncoms,
+  selectFamilyMembers,
+} from '@/include/selectValues'
 
 const store = useStore()
 const searchModalState = computed(() => store.state.modal['searchModal'])
 const searchModalToggle = () => store.commit('SEARCH_MODAL_TOGGLE')
 
-const { handleSubmit, isSubmitting } = useForm({
+const { handleSubmit, isSubmitting, errors, values } = useForm({
   initialValues: {
-    annualIncome: '',
-    familyMembers: '',
+    age: '',
+    annual_income: '',
+    family_members: '',
   },
 })
 
-const { handleChange: annualIncomeHandle } = useField('annualIncome')
-const { handleChange: familyMembersHandle } = useField('familyMembers')
+const { handleChange: ageHandle } = useField('age')
+const { handleChange: annualIncomeHandle } = useField('annual_income')
+const { handleChange: familyMembersHandle } = useField('family_members')
 
-const search = handleSubmit((postData) => store.dispatch('', postData))
+const searchArticles = handleSubmit((postData) => {
+  console.log(postData)
+  store.commit('DESTROY_CHART')
+  store.dispatch('searchArticles', postData)
+  searchModalToggle()
+})
 </script>

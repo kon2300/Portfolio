@@ -240,7 +240,6 @@
           </p>
         </div>
       </form>
-      {{ values }}
     </div>
   </div>
 </template>
