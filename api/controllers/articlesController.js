@@ -1,12 +1,12 @@
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+const { Op } = require('sequelize')
 const { User, Article, Like } = require('../models')
 
 module.exports = {
   postArticle: async (req, res) => {
     await Article.findOrCreate({
       where: {
-        [Op.and]: { user_id: req.body.user_id, time: req.body.time },
+        user_id: req.body.user_id,
+        time: req.body.time,
       },
       defaults: {
         name: req.body.name,
@@ -130,6 +130,31 @@ module.exports = {
       res.json(result)
     } catch (error) {
       res.json({ showArticlesError: error })
+    }
+  },
+  searchArticles: async (req, res) => {
+    try {
+      const result = await Article.findAll({
+        where: {
+          age: req.body.age,
+          annual_income: req.body.annual_income,
+          family_members: req.body.family_members,
+        },
+        include: [
+          {
+            model: User,
+            as: 'like',
+            attributes: ['id'],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+        order: [['updatedAt', 'DESC']],
+      })
+      res.json(result)
+    } catch (error) {
+      res.json({ searchArticlesError: error })
     }
   },
   removeArticle: async (req, res) => {

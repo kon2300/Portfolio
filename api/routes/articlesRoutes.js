@@ -14,6 +14,8 @@ router.get('/showMyAllArticles/:userId', articlesController.showMyAllArticles)
 
 router.get('/showAllArticles', articlesController.showAllArticles)
 
+router.post('/searchArticles', articlesController.searchArticles)
+
 router.get('/editArticle/:articleId', articlesController.editArticle)
 
 router.post('/likeArticle/:articleId/:userId', articlesController.likeArticle)
