@@ -29,7 +29,7 @@
             >年齢</label
           >
           <select class="form" name="age" @change="ageHandle">
-            <option value="">選択してください</option>
+            <option value="" disabled selected>選択してください</option>
             <option
               v-for="selectAge in selectAges"
               :key="selectAge.id"
@@ -54,7 +54,7 @@
             name="annual_income"
             @change="annualIncomeHandle"
           >
-            <option value="">選択してください</option>
+            <option value="" disabled selected>選択してください</option>
             <option
               v-for="selectAnnualIncom in selectAnnualIncoms"
               :key="selectAnnualIncom.id"
@@ -79,7 +79,7 @@
             name="family_members"
             @change="familyMembersHandle"
           >
-            <option value="">選択してください</option>
+            <option value="" disabled selected>選択してください</option>
             <option
               v-for="selectFamilyMember in selectFamilyMembers"
               :key="selectFamilyMember.id"
