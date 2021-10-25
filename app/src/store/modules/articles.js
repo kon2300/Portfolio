@@ -47,6 +47,11 @@ export default {
       console.log(res.data)
       commit('SET_ALL_ARTICLE', res.data)
     },
+    searchArticles: async ({ commit }, postData) => {
+      const res = await axios.post('articles/searchArticles', postData)
+      console.log(res.data)
+      commit('SET_ALL_ARTICLE', res.data)
+    },
     editArticle: async ({ commit }, article_id) => {
       const res = await axios.get(`articles/editArticle/${article_id}`)
       console.log(res.data)
