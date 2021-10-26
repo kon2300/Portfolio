@@ -18,6 +18,8 @@ router.post('/searchArticles', articlesController.searchArticles)
 
 router.get('/editArticle/:articleId', articlesController.editArticle)
 
+router.delete('/removeArticle/:articleId', articlesController.removeArticle)
+
 router.post('/likeArticle/:articleId/:userId', articlesController.likeArticle)
 
 router.delete('/removeLikeArticle/:articleId/:userId', articlesController.removeLikeArticle)

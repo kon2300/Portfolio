@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { ThumbUpIcon, HeartIcon, PencilIcon } from '@heroicons/vue/solid'
+import { HeartIcon, PencilIcon } from '@heroicons/vue/solid'
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import { renderChartDougnut } from '@/include/chart'

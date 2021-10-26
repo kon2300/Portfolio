@@ -15,7 +15,7 @@
             class="form bg-gray-200"
             type="text"
             name="name"
-            v-model="profile.name"
+            v-model="values.name"
             @change="nameHandle"
             disabled
           />
@@ -31,7 +31,7 @@
           <select
             class="form"
             name="age"
-            v-model="profile.age"
+            v-model="values.age"
             @change="ageHandle"
           >
             <option
@@ -56,7 +56,7 @@
           <select
             class="form"
             name="annual_income"
-            v-model="profile.annual_income"
+            v-model="values.annual_income"
             @change="annualIncomeHandle"
           >
             <option
@@ -81,7 +81,7 @@
           <select
             class="form"
             name="family_members"
-            v-model="profile.family_members"
+            v-model="values.family_members"
             @change="familyMembersHandle"
           >
             <option
@@ -103,7 +103,6 @@
           </button>
         </div>
       </form>
-      {{ values }}
     </div>
   </div>
 </template>
