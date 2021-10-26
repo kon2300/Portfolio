@@ -63,13 +63,16 @@ export default {
       }
     },
     logout: async ({ commit }) => {
-      await axios.post('auth/logout')
-      try {
-        commit('SET_TOKEN', '')
-        commit('SET_USER', '')
-        router.push({ name: 'top' })
-      } catch (e) {
-        console.log(e)
+      if (window.confirm('ログアウトしますか？')) {
+        await axios.post('auth/logout')
+        try {
+          commit('SET_TOKEN', '')
+          commit('SET_USER', '')
+          store.commit('DESTROY_CHART')
+          router.push({ name: 'top' })
+        } catch (e) {
+          console.log(e)
+        }
       }
     },
   },

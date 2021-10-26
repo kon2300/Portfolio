@@ -65,12 +65,14 @@ export default {
       await axios.delete(`articles/removeLikeArticle/${article_id}/${user_id}`)
       dispatch('showAllArticles')
     },
-    removeArticle: async ({ state }) => {
-      const res = await axios.delete(
-        `articles/removeArticle/${state.originalArticle.id}`
-      )
-      console.log(res.data)
-      router.push({ name: 'everybodys-posts' })
+    removeArticle: async (_, article_id) => {
+      if (window.confirm('投稿した記事を削除しますか？')) {
+        const res = await axios.delete(`articles/removeArticle/${article_id}`)
+        console.log(res.data)
+        router.push({ name: 'everybodys-posts' })
+      } else {
+        window.alert('キャンセルしました。')
+      }
     },
   },
 }

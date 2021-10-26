@@ -1,7 +1,17 @@
 <template>
-  <div class="container mx-auto flex items-center justify-center relative">
+  <div class="container mx-auto flex items-center justify-center">
     <div
-      class="grid bg-white p-6 rounded-md shadow-2xl w-2/3 md:w-1/2 lg:w-1/3"
+      class="
+        grid
+        bg-white
+        p-6
+        rounded-md
+        shadow-2xl
+        w-2/3
+        md:w-1/2
+        lg:w-1/3
+        relative
+      "
     >
       <div class="font-mono text-2xl text-gray-600 flex justify-center pb-3">
         投稿した家計簿の編集
@@ -14,7 +24,7 @@
           <select
             class="form bg-gray-200"
             name="time"
-            v-model="originalArticle.time"
+            v-model="values.time"
             @input="timeHandle"
           >
             <option
@@ -46,7 +56,7 @@
             min="0"
             step="1000"
             name="rent_expenses"
-            v-model="originalArticle.rent_expenses"
+            v-model="values.rent_expenses"
             @change="rentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -66,7 +76,7 @@
             min="0"
             step="1000"
             name="food_expenses"
-            v-model="originalArticle.food_expenses"
+            v-model="values.food_expenses"
             @change="foodExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -86,7 +96,7 @@
             min="0"
             step="1000"
             name="householeditem_expenses"
-            v-model="originalArticle.householeditem_expenses"
+            v-model="values.householeditem_expenses"
             @change="householeditemExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -106,7 +116,7 @@
             min="0"
             step="1000"
             name="utility_expenses"
-            v-model="originalArticle.utility_expenses"
+            v-model="values.utility_expenses"
             @change="utilityExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -126,7 +136,7 @@
             min="0"
             step="1000"
             name="internet_expenses"
-            v-model="originalArticle.internet_expenses"
+            v-model="values.internet_expenses"
             @change="internetExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -146,7 +156,7 @@
             min="0"
             step="1000"
             name="riberalarts_expenses"
-            v-model="originalArticle.riberalarts_expenses"
+            v-model="values.riberalarts_expenses"
             @change="riberalartsExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -166,7 +176,7 @@
             min="0"
             step="1000"
             name="insurance_expenses"
-            v-model="originalArticle.insurance_expenses"
+            v-model="values.insurance_expenses"
             @change="insuranceExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -186,7 +196,7 @@
             min="0"
             step="1000"
             name="entertainment_expenses"
-            v-model="originalArticle.entertainment_expenses"
+            v-model="values.entertainment_expenses"
             @change="entertainmentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -206,7 +216,7 @@
             min="0"
             step="1000"
             name="free_expenses"
-            v-model="originalArticle.free_expenses"
+            v-model="values.free_expenses"
             @change="freeExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -222,7 +232,7 @@
             class="form"
             type="text"
             name="comment"
-            v-model="originalArticle.comment"
+            v-model="values.comment"
             @change="commentHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -240,6 +250,9 @@
           </p>
         </div>
       </form>
+      <button class="absolute right-2 bottom-2" @click="removeArticle">
+        <TrashIcon class="h-8 w-8 text-pink-600" />
+      </button>
     </div>
   </div>
 </template>
@@ -249,6 +262,8 @@ import { useStore } from 'vuex'
 import { useField, useForm } from 'vee-validate'
 import { postEntrySchema } from '@/include/validation'
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
+import { TrashIcon } from '@heroicons/vue/outline'
+
 import { useRoute, useRouter } from 'vue-router'
 import { getNow } from '@/include/selectValues'
 
@@ -321,6 +336,7 @@ setValues({
 })
 
 const detail = computed(() => store.state.profile.detail)
+
 const updateArticle = handleSubmit((postData) => {
   postData['user_id'] = detail.value.user_id
   postData['name'] = detail.value.name
@@ -330,5 +346,9 @@ const updateArticle = handleSubmit((postData) => {
   console.log(postData)
   store.dispatch('updateArticle', postData)
 })
+
+const removeArticle = () =>
+  store.dispatch('removeArticle', originalArticle.value.id)
+
 const error = computed(() => store.state.auth['error'])
 </script>

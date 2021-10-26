@@ -37,7 +37,7 @@
             min="0"
             step="1000"
             name="rent_expenses"
-            value="0"
+            v-model="values.rent_expenses"
             @change="rentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -57,7 +57,7 @@
             min="0"
             step="1000"
             name="food_expenses"
-            value="0"
+            v-model="values.food_expenses"
             @change="foodExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -77,7 +77,7 @@
             min="0"
             step="1000"
             name="householeditem_expenses"
-            value="0"
+            v-model="values.householeditem_expenses"
             @change="householeditemExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -97,7 +97,7 @@
             min="0"
             step="1000"
             name="utility_expenses"
-            value="0"
+            v-model="values.utility_expenses"
             @change="utilityExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -117,7 +117,7 @@
             min="0"
             step="1000"
             name="internet_expenses"
-            value="0"
+            v-model="values.internet_expenses"
             @change="internetExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -137,7 +137,7 @@
             min="0"
             step="1000"
             name="riberalarts_expenses"
-            value="0"
+            v-model="values.riberalarts_expenses"
             @change="riberalartsExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -157,7 +157,7 @@
             min="0"
             step="1000"
             name="insurance_expenses"
-            value="0"
+            v-model="values.insurance_expenses"
             @change="insuranceExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -177,7 +177,7 @@
             min="0"
             step="1000"
             name="entertainment_expenses"
-            value="0"
+            v-model="values.entertainment_expenses"
             @change="entertainmentExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -197,7 +197,7 @@
             min="0"
             step="1000"
             name="free_expenses"
-            value="0"
+            v-model="values.free_expenses"
             @change="freeExpensesHandle"
           />
           <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
@@ -230,7 +230,6 @@
           </p>
         </div>
       </form>
-      {{ values }}
     </div>
   </div>
 </template>
