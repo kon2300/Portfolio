@@ -29,7 +29,7 @@
                 v-model="values.age"
                 @change="ageHandle"
               >
-                <option value="" disabled selected>選択してください</option>
+                <option value="" selected>すべて</option>
                 <option
                   v-for="selectAge in selectAges"
                   :key="selectAge.id"
@@ -55,7 +55,7 @@
                 v-model="values.annual_income"
                 @change="annualIncomeHandle"
               >
-                <option value="" disabled selected>選択してください</option>
+                <option value="" selected>すべて</option>
                 <option
                   v-for="selectAnnualIncom in selectAnnualIncoms"
                   :key="selectAnnualIncom.id"
@@ -81,7 +81,7 @@
                 v-model="values.family_members"
                 @change="familyMembersHandle"
               >
-                <option value="" disabled selected>選択してください</option>
+                <option value="" selected>すべて</option>
                 <option
                   v-for="selectFamilyMember in selectFamilyMembers"
                   :key="selectFamilyMember.id"

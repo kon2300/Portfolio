@@ -134,25 +134,87 @@ module.exports = {
   },
   searchArticles: async (req, res) => {
     try {
-      const result = await Article.findAll({
-        where: {
-          age: req.body.age,
-          annual_income: req.body.annual_income,
-          family_members: req.body.family_members,
-        },
-        include: [
-          {
-            model: User,
-            as: 'like',
-            attributes: ['id'],
-            through: {
-              attributes: [],
+      if (req.body.age && req.body.annual_income) {
+        const result = await Article.findAll({
+          where: {
+            age: req.body.age,
+            annual_income: req.body.annual_income,
+          },
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+        })
+        res.json(result)
+      } else if (req.body.age && req.body.family_members) {
+        const result = await Article.findAll({
+          where: {
+            age: req.body.age,
+            family_members: req.body.family_members,
+          },
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+        })
+        res.json(result)
+      } else if (req.body.age && req.body.annual_income && req.body.family_members) {
+        const result = await Article.findAll({
+          where: {
+            age: req.body.age,
+            annual_income: req.body.annual_income,
+            family_members: req.body.family_members,
+          },
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+        })
+        res.json(result)
+      } else {
+        const result = await Article.findAll({
+          where: {
+            [Op.or]: {
+              age: req.body.age,
+              annual_income: req.body.annual_income,
+              family_members: req.body.family_members,
             },
           },
-        ],
-        order: [['updatedAt', 'DESC']],
-      })
-      res.json(result)
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+        })
+        res.json(result)
+      }
     } catch (error) {
       res.json({ searchArticlesError: error })
     }
