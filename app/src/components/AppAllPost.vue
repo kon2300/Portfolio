@@ -2,141 +2,251 @@
   <div>
     <div class="p-3 flex justify-center text-3xl">みんなの投稿</div>
     <div v-for="article in allArticle" :key="article.id">
-      <div class="container mx-auto relative bg-yellow-100 mb-10">
+      <div
+        class="
+          container
+          mx-auto
+          relative
+          bg-yellow-100
+          mb-10
+          rounded-3xl
+          border-4 border-yellow-300
+          md:w-full
+        "
+      >
         <div
           class="
             flex flex-col
-            md:grid md:grid-flow-col md:grid-rows-3 md:grid-cols-4
+            md:grid md:grid-flow-col md:grid-rows-1 md:grid-cols-3
           "
         >
           <div
+            class="md:col-span-2 md:grid grid-flow-col grid-rows-2 grid-cols-2"
+          >
+            <div
+              class="
+                row-span-1
+                col-span-1
+                grid
+                justify-items-stretch
+                text-center
+                font-bold
+                border-b-4 border-yellow-300
+                divide-y-2 divide-yellow-200 divide-dashed
+                md:col-span-1
+              "
+            >
+              <div>
+                <span class="text-xl">{{ `${article.time.year}年` }} </span>
+                <span class="text-xl"
+                  >{{ `${article.time.month}月の家計簿` }}
+                </span>
+              </div>
+              <div>
+                <span class="text-xl">{{ article.name }} </span>
+                <span class="text-xs">@{{ article.user_id }}</span>
+              </div>
+              <div>
+                <span>月収:{{ article.annual_income }}</span>
+              </div>
+              <div>
+                <span>世帯人数:{{ article.family_members }}</span>
+              </div>
+              <div>
+                <span>年齢:{{ article.age }}</span>
+              </div>
+            </div>
+
+            <div
+              class="
+                row-span-1
+                col-span-2
+                grid grid-flow-col grid-rows-2
+                gap-1
+                m-1
+              "
+            >
+              <div
+                class="
+                  rounded-full
+                  border-red-300
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>家賃</p>
+                <p>￥{{ article.rent_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-yellow-600
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>食費</p>
+                <p>￥{{ article.food_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-green-300
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>日用品費</p>
+                <p>￥{{ article.householeditem_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-blue-300
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>水道,光熱費</p>
+                <p>￥{{ article.utility_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-pink-700
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>通信費</p>
+                <p>￥{{ article.internet_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-green-100
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>教育,教養費</p>
+                <p>￥{{ article.riberalarts_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-red-600
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>医療,保険費</p>
+                <p>￥{{ article.insurance_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-indigo-800
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>美容,娯楽,衣服費</p>
+                <p>￥{{ article.free_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-purple-300
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>交際費</p>
+                <p>￥{{ article.entertainment_expenses }}円</p>
+              </div>
+            </div>
+
+            <div
+              class="
+                col-span-1
+                row-span-1
+                md:border-b-4 md:border-l-4 md:border-yellow-300
+              "
+            >
+              <div class="p-2">
+                <p>コメント:</p>
+                <p class="font-mono">{{ article.comment }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div
             class="
-              order-last
               row-span-2
-              md:row-span-3 md:col-span-2 md:order-none
-              box-border
-              border-4
+              border-t-4 border-yellow-300
+              md:border-t-0 md:border-l-4 md:row-span-1 md:col-span-1
+              grid
+              items-center
             "
           >
             <canvas :id="article.id" class="m-4 md:m-0"></canvas>
           </div>
 
           <div
-            class="
-              row-span-1
-              md:col-span-2
-              box-border
-              border-4
-              grid
-              justify-items-center
-              items-center
-              font-bold
-            "
+            v-if="user"
+            class="absolute group -right-0 md:-right-8 -bottom-10"
           >
-            <div class="box-border border-4">
-              <span class="text-xl">{{ `${article.time.year}年` }} </span>
-              <span class="text-xl"
-                >{{ `${article.time.month}月の家計簿` }}
-              </span>
-            </div>
-            <div class="box-border border-4">
-              <span class="text-xl">{{ article.name }} </span>
-              <span class="text-xs">@{{ article.user_id }}</span>
-            </div>
-            <div class="box-border border-4 flex">
-              <span>月収:{{ article.annual_income }}</span>
-            </div>
-            <div class="flex">
-              <div class="box-border border-4 flex">
-                <span>世帯人数:{{ article.family_members }}</span>
-              </div>
-              <div class="box-border border-4 flex">
-                <span>年齢:{{ article.age }}</span>
-              </div>
-            </div>
-            <div class="box-border border-4 flex">
-              <span>今月の合計支出</span>
-            </div>
-          </div>
-
-          <div
-            class="
-              row-span-2
-              md:col-span-2
-              box-border
-              border-4
-              grid grid-flow-col grid-rows-5
-              justify-items-center
-              items-center
-            "
-          >
-            <div class="box-boder border-4">
-              家賃:￥{{ article.rent_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              食費:￥{{ article.food_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              日用品費:￥{{ article.householeditem_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              水道,光熱費:￥{{ article.utility_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              通信費:￥{{ article.internet_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              教育,教養費:￥{{ article.riberalarts_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              医療,保険費:￥{{ article.insurance_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              交際費:￥{{ article.entertainment_expenses }}
-            </div>
-            <div class="box-boder border-4">
-              美容,娯楽,衣服費:￥{{ article.free_expenses }}
-            </div>
-            <div class="box-boder border-4">コメント:{{ article.comment }}</div>
-          </div>
-
-          <div v-if="user">
-            <div v-if="article.user_id === user" class="absolute right-2 top-2">
-              <div class="flex">
-                <HeartIcon class="h-6 w-6 relative text-yellow-500" />
-                {{ Object.keys(article.like).length }}
-              </div>
-            </div>
-
-            <div v-show="checkLike(article.like) && article.user_id !== user">
-              <div class="absolute right-2 top-2">
-                <div class="flex">
-                  <button @click="removeLikeArticle(article.id, user)">
-                    <HeartIcon class="h-6 w-6 text-red-500" />
-                  </button>
-                  {{ Object.keys(article.like).length }}
-                </div>
-              </div>
-            </div>
-
-            <div v-show="!checkLike(article.like) && article.user_id !== user">
-              <div class="absolute right-2 top-2">
-                <div class="flex">
-                  <button @click="likeArticle(article.id, user)">
-                    <ThumbUpIcon class="h-6 w-6 text-blue-300" />
-                  </button>
-                  {{ Object.keys(article.like).length }}
-                </div>
-              </div>
-            </div>
-
+            <InformationCircleIcon class="h-6 w-6 text-yellow-700" />
             <div
-              v-if="article.user_id === user"
-              class="absolute right-2 bottom-2"
+              class="
+                invisible
+                group-hover:visible
+                bg-yellow-200
+                h-16
+                w-16
+                rounded-3xl
+              "
             >
-              <button @click="editArticle(article.id)">
-                <PencilIcon class="h-6 w-6 text-blue-600" />
-              </button>
+              <div v-if="article.user_id === user">
+                <div class="flex absolute right-4">
+                  <HeartIcon class="h-6 w-6 text-yellow-500" />
+                  {{ Object.keys(article.like).length }}
+                </div>
+              </div>
+
+              <div v-show="checkLike(article.like) && article.user_id !== user">
+                <div class="absolute right-4 top-10">
+                  <div class="flex">
+                    <button @click="removeLikeArticle(article.id, user)">
+                      <HeartIcon class="h-6 w-6 text-red-500" />
+                    </button>
+                    {{ Object.keys(article.like).length }}
+                  </div>
+                </div>
+              </div>
+
+              <div
+                v-show="!checkLike(article.like) && article.user_id !== user"
+              >
+                <div class="absolute right-4 top-10">
+                  <div class="flex">
+                    <button @click="likeArticle(article.id, user)">
+                      <ThumbUpIcon class="h-6 w-6 text-blue-300" />
+                    </button>
+                    {{ Object.keys(article.like).length }}
+                  </div>
+                </div>
+              </div>
+
+              <div
+                v-if="article.user_id === user"
+                class="absolute right-5 -bottom-1"
+              >
+                <button @click="editArticle(article.id)">
+                  <PencilIcon class="h-6 w-6 text-blue-600" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -146,7 +256,12 @@
 </template>
 
 <script setup>
-import { ThumbUpIcon, HeartIcon, PencilIcon } from '@heroicons/vue/solid'
+import {
+  InformationCircleIcon,
+  ThumbUpIcon,
+  HeartIcon,
+  PencilIcon,
+} from '@heroicons/vue/solid'
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import { renderChartDougnut } from '@/include/chart'

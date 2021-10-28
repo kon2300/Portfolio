@@ -29,7 +29,7 @@ export default {
       }
     },
     updateArticle: async ({ state }, postData) => {
-      await axios.put(`articles/${state.originalArticle.id}`, postData)
+      await axios.put(`articles/${state.article.id}`, postData)
       router.push({ name: 'everybodys-posts' })
     },
     showMyArticles: async ({ commit }, user_id) => {
