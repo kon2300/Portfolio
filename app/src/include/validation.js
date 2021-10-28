@@ -73,7 +73,10 @@ export const postEntrySchema = yup.object({
     .min(0, '0以上で入力してください')
     .required('入力は必須です')
     .typeError('数値を入力してください'),
-  comment: yup.string().required('入力は必須です'),
+  comment: yup
+    .string()
+    .required('入力は必須です')
+    .max(255, '254文字以内で入力してください'),
 })
 
 export const userSchema = yup.object({

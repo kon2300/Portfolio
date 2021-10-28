@@ -16,7 +16,7 @@ export const renderChartDougnut = (ctx, data) => {
             data: Object.values(data[0]),
             backgroundColor: [
               'rgba(252, 165, 165 ,0.8)',
-              'rgba(252, 211, 77,0.8)',
+              'rgba(217, 119, 6,0.8)',
               'rgba(110, 231, 183,0.8)',
               'rgba(147, 197, 253,0.8)',
               'rgba(190, 24, 93,0.8)',
@@ -27,7 +27,7 @@ export const renderChartDougnut = (ctx, data) => {
             ],
             borderColor: [
               'rgba(252, 165, 165)',
-              'rgba(252, 211, 77)',
+              'rgba(217, 119, 6)',
               'rgba(110, 231, 183)',
               'rgba(147, 197, 253)',
               'rgba(190, 24, 93)',
