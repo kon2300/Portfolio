@@ -118,7 +118,9 @@ import {
   selectAnnualIncoms,
   selectFamilyMembers,
 } from '@/include/selectValues'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useStore()
 const searchModalState = computed(() => store.state.modal['searchModal'])
 const searchModalToggle = () => store.commit('SEARCH_MODAL_TOGGLE')
@@ -137,8 +139,9 @@ const { handleChange: familyMembersHandle } = useField('family_members')
 
 const searchArticles = handleSubmit((postData) => {
   console.log(postData)
+  postData['page_number'] = 1
+  store.dispatch('showAllArticles', postData)
   store.commit('DESTROY_CHART')
-  store.dispatch('searchArticles', postData)
   searchModalToggle()
 })
 </script>

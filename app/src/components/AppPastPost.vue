@@ -11,7 +11,7 @@
           mb-10
           rounded-3xl
           border-4 border-yellow-300
-          lg:w-3/4
+          md:w-full
         "
       >
         <div
@@ -28,7 +28,6 @@
                 row-span-1
                 col-span-1
                 grid
-                justify-items-stretch
                 text-center
                 font-bold
                 border-b-4 border-yellow-300
@@ -36,23 +35,23 @@
                 md:col-span-1
               "
             >
-              <div>
+              <div class="pt-1">
                 <span class="text-xl">{{ `${article.time.year}年` }} </span>
                 <span class="text-xl"
                   >{{ `${article.time.month}月の家計簿` }}
                 </span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span class="text-xl">{{ article.name }} </span>
                 <span class="text-xs">@{{ article.user_id }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>月収:{{ article.annual_income }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>世帯人数:{{ article.family_members }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>年齢:{{ article.age }}</span>
               </div>
             </div>
@@ -62,8 +61,9 @@
                 row-span-1
                 col-span-2
                 grid grid-flow-col grid-rows-2
-                gap-3
+                gap-1
                 m-1
+                place-items-center
               "
             >
               <div
@@ -75,7 +75,7 @@
                 "
               >
                 <p>家賃</p>
-                <p>￥{{ article.rent_expenses }}</p>
+                <p>￥{{ article.rent_expenses }}円</p>
               </div>
               <div
                 class="
@@ -86,7 +86,7 @@
                 "
               >
                 <p>食費</p>
-                <p>￥{{ article.food_expenses }}</p>
+                <p>￥{{ article.food_expenses }}円</p>
               </div>
               <div
                 class="
@@ -97,7 +97,7 @@
                 "
               >
                 <p>日用品費</p>
-                <p>￥{{ article.householeditem_expenses }}</p>
+                <p>￥{{ article.householeditem_expenses }}円</p>
               </div>
               <div
                 class="
@@ -108,7 +108,7 @@
                 "
               >
                 <p>水道,光熱費</p>
-                <p>￥{{ article.utility_expenses }}</p>
+                <p>￥{{ article.utility_expenses }}円</p>
               </div>
               <div
                 class="
@@ -119,18 +119,18 @@
                 "
               >
                 <p>通信費</p>
-                <p>￥{{ article.internet_expenses }}</p>
+                <p>￥{{ article.internet_expenses }}円</p>
               </div>
               <div
                 class="
                   rounded-full
-                  border-green-100
+                  border-green-800
                   p-2
                   border-4 border-opacity-80
                 "
               >
                 <p>教育,教養費</p>
-                <p>￥{{ article.riberalarts_expenses }}</p>
+                <p>￥{{ article.riberalarts_expenses }}円</p>
               </div>
               <div
                 class="
@@ -141,18 +141,7 @@
                 "
               >
                 <p>医療,保険費</p>
-                <p>￥{{ article.insurance_expenses }}</p>
-              </div>
-              <div
-                class="
-                  rounded-full
-                  border-purple-300
-                  p-2
-                  border-4 border-opacity-80
-                "
-              >
-                <p>交際費</p>
-                <p>￥{{ article.entertainment_expenses }}</p>
+                <p>￥{{ article.insurance_expenses }}円</p>
               </div>
               <div
                 class="
@@ -163,7 +152,24 @@
                 "
               >
                 <p>美容,娯楽,衣服費</p>
-                <p>￥{{ article.free_expenses }}</p>
+                <p>￥{{ article.free_expenses }}円</p>
+              </div>
+              <div
+                class="
+                  rounded-full
+                  border-purple-300
+                  p-2
+                  border-4 border-opacity-80
+                "
+              >
+                <p>交際費</p>
+                <p>￥{{ article.entertainment_expenses }}円</p>
+              </div>
+              <div
+                class="rounded-full border-black p-2 border-4 border-opacity-80"
+              >
+                <p>合計</p>
+                <p>￥{{ article.total_expenses }}円</p>
               </div>
             </div>
 
@@ -234,18 +240,22 @@
 <script setup>
 import {
   InformationCircleIcon,
-  ThumbUpIcon,
   HeartIcon,
   PencilIcon,
 } from '@heroicons/vue/solid'
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useStore } from 'vuex'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { renderChartDougnut } from '@/include/chart'
-import router from '../router'
 
+const router = useRouter
 const store = useStore()
 onMounted(() => {
-  store.dispatch('showMyAllArticle', user.value)
+  const postData = {
+    page_number: 1,
+    user_id: user.value,
+  }
+  store.dispatch('showMyAllArticle', postData)
 })
 onUpdated(() => {
   allArticle.value.forEach((article) => {
@@ -273,6 +283,17 @@ const user = computed(() => store.state.auth.user)
 const editArticle = (article_id) => {
   router.push({ name: 'edit-article', params: { id: article_id } })
 }
+
+onBeforeRouteUpdate((to, from, next) => {
+  const postData = {
+    page_number: to.params.pageNumber,
+    user_id: user.value,
+  }
+  console.log(postData)
+  store.commit('DESTROY_CHART')
+  store.dispatch('showMyAllArticle', postData)
+  next()
+})
 </script>
 
 <style></style>

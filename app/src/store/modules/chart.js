@@ -9,7 +9,6 @@ export default {
     DESTROY_CHART(state) {
       if (state.allChart) {
         state.allChart.forEach((chart) => {
-          console.log(chart)
           return chart.destroy()
         })
       }

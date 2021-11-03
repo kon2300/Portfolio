@@ -1,4 +1,5 @@
 import store from '@/store'
+import router from '@/router'
 
 export default {
   state: {
@@ -17,6 +18,9 @@ export default {
       store.state.auth.error = undefined
     },
     SEARCH_MODAL_TOGGLE: (state) => {
+      if (!state.searchModal) {
+        router.replace({ name: 'everybodys-posts', params: { pageNumber: 1 } })
+      }
       state.searchModal = !state.searchModal
     },
     OTHER_MODAL_TOGGLE: (state) => {

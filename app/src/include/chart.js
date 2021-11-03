@@ -3,7 +3,6 @@ import store from '@/store'
 
 export const renderChartDougnut = (ctx, data) => {
   const newCtx = document.getElementById(ctx).getContext('2d')
-  console.log(data)
   store.commit(
     'SET_CHART',
     new Chart(newCtx, {
@@ -20,7 +19,7 @@ export const renderChartDougnut = (ctx, data) => {
               'rgba(110, 231, 183,0.8)',
               'rgba(147, 197, 253,0.8)',
               'rgba(190, 24, 93,0.8)',
-              'rgba(209, 250, 229,0.8)',
+              'rgba(6,95,70,0.8)',
               'rgba(220, 38, 38,0.8)',
               'rgba(196, 181, 253,0.8)',
               'rgba(55, 48, 163,0.8)',
@@ -31,7 +30,7 @@ export const renderChartDougnut = (ctx, data) => {
               'rgba(110, 231, 183)',
               'rgba(147, 197, 253)',
               'rgba(190, 24, 93)',
-              'rgba(209, 250, 229)',
+              'rgba(6,95,70)',
               'rgba(220, 38, 38)',
               'rgba(196, 181, 253)',
               'rgba(55, 48, 163)',
@@ -51,7 +50,6 @@ export const renderChartDougnut = (ctx, data) => {
 
 export const renderTotalSpending = (ctx, data) => {
   const newCtx = document.getElementById(ctx).getContext('2d')
-  console.log(data)
   store.commit(
     'SET_CHART',
     new Chart(newCtx, {
@@ -90,7 +88,6 @@ export const renderTotalSpending = (ctx, data) => {
 
 export const renderMonthlySpending = (ctx, data, label) => {
   const newCtx = document.getElementById(ctx).getContext('2d')
-  console.log(label)
   store.commit(
     'SET_CHART',
     new Chart(newCtx, {
