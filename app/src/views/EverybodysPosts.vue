@@ -7,12 +7,14 @@
       <button class="btn btn-action" @click="searchModalToggle">検索</button>
     </div>
     <AppAllPost />
+    <AppPaginationAllPost />
   </div>
 </template>
 
 <script setup>
 import { useStore } from 'vuex'
 import AppAllPost from '@/components/AppAllPost.vue'
+import AppPaginationAllPost from '@/components/AppPaginationAllPost.vue'
 import { computed } from '@vue/reactivity'
 
 const store = useStore()

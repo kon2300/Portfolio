@@ -5,16 +5,28 @@ const routes = [
   {
     path: '/',
     name: 'top',
-    redirect: { name: 'everybodys-posts' },
+    redirect: { name: 'everybodys-posts', params: { pageNumber: 1 } },
   },
   {
-    path: '/everybodys-posts',
+    path: '/everybodys-posts/:pageNumber',
     name: 'everybodys-posts',
     component: () => import('@/views/EverybodysPosts.vue'),
+    beforeEnter: (to, from) => {
+      console.log(store.state.articles.searchValue)
+      if (!store.state.articles.searchValue) {
+        const postData = {
+          age: '',
+          annual_income: '',
+          family_members: '',
+          page_number: '1',
+        }
+        store.commit('SET_SEARCH_VALUES', postData)
+      }
+    },
   },
   {
-    path: '/past-post/:id',
-    name: 'past-post',
+    path: '/past-posts/:pageNumber',
+    name: 'past-posts',
     component: () => import('@/views/PastPosts.vue'),
   },
   {

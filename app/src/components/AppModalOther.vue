@@ -20,7 +20,7 @@
           <div class="space-y-6 grid justify-items-center">
             <router-link
               class="md:hidden font-bold text-xl btn-action relative"
-              :to="{ name: 'everybodys-posts' }"
+              :to="{ name: 'everybodys-posts', params: { pageNumber: 1 } }"
               @click="otherModalToggle"
             >
               <p class="text-black">みんなの投稿</p>
@@ -47,7 +47,7 @@
 
             <router-link
               class="font-bold text-xl btn-action relative"
-              :to="{ name: 'past-post', params: { id: loginUser } }"
+              :to="{ name: 'past-posts', params: { pageNumber: 1 } }"
               @click="otherModalToggle"
               ><p class="text-black">過去の投稿</p>
               <ArchiveIcon class="h-6 w-6 text-black absolute top-0 -left-7"

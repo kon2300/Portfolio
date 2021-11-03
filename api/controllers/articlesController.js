@@ -92,9 +92,11 @@ module.exports = {
     }
   },
   showMyAllArticles: async (req, res) => {
+    const page = req.body.page_number
+    const parpage = 2
     try {
-      const result = await Article.findAll({
-        where: { user_id: req.params.userId },
+      const result = await Article.findAndCountAll({
+        where: { user_id: req.body.user_id },
         include: [
           {
             model: User,
@@ -106,36 +108,21 @@ module.exports = {
           },
         ],
         order: [['updatedAt', 'DESC']],
+        offset: (page - 1) * parpage,
+        limit: parpage,
       })
+      result['count'] = Math.ceil(result['count'] / parpage)
       res.json(result)
     } catch (error) {
       res.json({ showMyAllArticlesError: error })
     }
   },
   showAllArticles: async (req, res) => {
-    try {
-      const result = await Article.findAll({
-        include: [
-          {
-            model: User,
-            as: 'like',
-            attributes: ['id'],
-            through: {
-              attributes: [],
-            },
-          },
-        ],
-        order: [['updatedAt', 'DESC']],
-      })
-      res.json(result)
-    } catch (error) {
-      res.json({ showArticlesError: error })
-    }
-  },
-  searchArticles: async (req, res) => {
+    const page = req.body.page_number
+    const parpage = 2
     try {
       if (req.body.age && req.body.annual_income) {
-        const result = await Article.findAll({
+        const result = await Article.findAndCountAll({
           where: {
             age: req.body.age,
             annual_income: req.body.annual_income,
@@ -151,10 +138,13 @@ module.exports = {
             },
           ],
           order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
         })
+        result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age && req.body.family_members) {
-        const result = await Article.findAll({
+        const result = await Article.findAndCountAll({
           where: {
             age: req.body.age,
             family_members: req.body.family_members,
@@ -170,10 +160,13 @@ module.exports = {
             },
           ],
           order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
         })
+        result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age && req.body.annual_income && req.body.family_members) {
-        const result = await Article.findAll({
+        const result = await Article.findAndCountAll({
           where: {
             age: req.body.age,
             annual_income: req.body.annual_income,
@@ -190,10 +183,13 @@ module.exports = {
             },
           ],
           order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
         })
+        result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
-      } else {
-        const result = await Article.findAll({
+      } else if (req.body.age || req.body.annual_income || req.body.family_members) {
+        const result = await Article.findAndCountAll({
           where: {
             [Op.or]: {
               age: req.body.age,
@@ -212,7 +208,28 @@ module.exports = {
             },
           ],
           order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
         })
+        result['count'] = Math.ceil(result['count'] / parpage)
+        res.json(result)
+      } else {
+        const result = await Article.findAndCountAll({
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
+        })
+        result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       }
     } catch (error) {

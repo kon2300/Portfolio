@@ -5,18 +5,30 @@ import store from '@/store'
 export default {
   state: {
     allArticle: [],
+    allArticleCount: undefined,
     myAllArticle: [],
+    myAllArticleCount: undefined,
     article: [],
+    searchValues: [],
   },
   mutations: {
     SET_ALL_ARTICLE(state, value) {
       state.allArticle = value
     },
+    SET_ALL_ARTICLE_COUNT(state, value) {
+      state.allArticleCount = value
+    },
     SET_MY_ALL_ARTICLE(state, value) {
       state.myAllArticle = value
     },
+    SET_MY_ALL_ARTICLE_COUNT(state, value) {
+      state.myAllArticleCount = value
+    },
     SET_ARTICLE(state, value) {
       state.article = value
+    },
+    SET_SEARCH_VALUES(state, value) {
+      state.searchValues = value
     },
   },
   getters: {},
@@ -37,20 +49,18 @@ export default {
       console.log(res.data)
       commit('SET_ARTICLE', res.data)
     },
-    showMyAllArticle: async ({ commit }, user_id) => {
-      const res = await axios.get(`articles/showMyAllArticles/${user_id}`)
+    showMyAllArticle: async ({ commit }, postData) => {
+      const res = await axios.post('articles/showMyAllArticles', postData)
       console.log(res.data)
-      commit('SET_MY_ALL_ARTICLE', res.data)
+      commit('SET_MY_ALL_ARTICLE', res.data.rows)
+      commit('SET_MY_ALL_ARTICLE_COUNT', res.data.count)
     },
-    showAllArticles: async ({ commit }) => {
-      const res = await axios.get('articles/showAllArticles')
+    showAllArticles: async ({ commit }, postData) => {
+      const res = await axios.post('articles/showAllArticles', postData)
       console.log(res.data)
-      commit('SET_ALL_ARTICLE', res.data)
-    },
-    searchArticles: async ({ commit }, postData) => {
-      const res = await axios.post('articles/searchArticles', postData)
-      console.log(res.data)
-      commit('SET_ALL_ARTICLE', res.data)
+      commit('SET_SEARCH_VALUES', postData)
+      commit('SET_ALL_ARTICLE', res.data.rows)
+      commit('SET_ALL_ARTICLE_COUNT', res.data.count)
     },
     editArticle: async ({ commit }, article_id) => {
       const res = await axios.get(`articles/editArticle/${article_id}`)

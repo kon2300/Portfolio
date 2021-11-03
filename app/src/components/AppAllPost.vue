@@ -28,7 +28,6 @@
                 row-span-1
                 col-span-1
                 grid
-                justify-items-stretch
                 text-center
                 font-bold
                 border-b-4 border-yellow-300
@@ -36,23 +35,23 @@
                 md:col-span-1
               "
             >
-              <div>
+              <div class="pt-1">
                 <span class="text-xl">{{ `${article.time.year}年` }} </span>
                 <span class="text-xl"
                   >{{ `${article.time.month}月の家計簿` }}
                 </span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span class="text-xl">{{ article.name }} </span>
                 <span class="text-xs">@{{ article.user_id }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>月収:{{ article.annual_income }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>世帯人数:{{ article.family_members }}</span>
               </div>
-              <div>
+              <div class="pt-1">
                 <span>年齢:{{ article.age }}</span>
               </div>
             </div>
@@ -64,6 +63,7 @@
                 grid grid-flow-col grid-rows-2
                 gap-1
                 m-1
+                place-items-center
               "
             >
               <div
@@ -124,7 +124,7 @@
               <div
                 class="
                   rounded-full
-                  border-green-100
+                  border-green-800
                   p-2
                   border-4 border-opacity-80
                 "
@@ -164,6 +164,12 @@
               >
                 <p>交際費</p>
                 <p>￥{{ article.entertainment_expenses }}円</p>
+              </div>
+              <div
+                class="rounded-full border-black p-2 border-4 border-opacity-80"
+              >
+                <p>合計</p>
+                <p>￥{{ article.total_expenses }}円</p>
               </div>
             </div>
 
@@ -265,11 +271,15 @@ import {
 import { onMounted, computed, onUpdated } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import { renderChartDougnut } from '@/include/chart'
-import router from '../router'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const postData = computed(() => store.state.articles.searchValues)
 
 const store = useStore()
 onMounted(() => {
-  store.dispatch('showAllArticles')
+  store.dispatch('showAllArticles', postData.value)
 })
 onUpdated(() => {
   allArticle.value.forEach((article) => {
@@ -311,6 +321,14 @@ const removeLikeArticle = (article_id, user_id) => {
 const editArticle = (article_id) => {
   router.push({ name: 'edit-article', params: { id: article_id } })
 }
+
+onBeforeRouteUpdate((to, from, next) => {
+  console.log(postData.value)
+  postData.value['page_number'] = to.params.pageNumber
+  store.commit('DESTROY_CHART')
+  store.dispatch('showAllArticles', postData.value)
+  next()
+})
 </script>
 
 <style></style>

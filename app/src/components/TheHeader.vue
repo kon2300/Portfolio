@@ -63,7 +63,8 @@
       >
         <router-link
           class="font-bold text-xl btn-action relative"
-          :to="{ name: 'everybodys-posts' }"
+          :to="{ name: 'everybodys-posts', params: { pageNumber: 1 } }"
+          exact
           ><p>みんなの投稿</p>
           <UserGroupIcon class="h-6 w-6 text-white absolute top-0 -left-7" />
         </router-link>
