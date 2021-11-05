@@ -155,12 +155,16 @@
           </div>
 
           <div
-            v-if="error"
+            v-if="error && !isTooManyAttempts"
             class="pl-1 font-bold text-white bg-pink-600 rounded-md"
           >
             {{ error }}
           </div>
-          <form @submit="signInLocal" class="space-y-6">
+          <form
+            v-if="!isTooManyAttempts"
+            @submit="signInLocal"
+            class="space-y-6"
+          >
             <div class="relative">
               <label for="email" class="block text-sm font-bold"> Email </label>
               <MailIcon class="h-6 w-6 text-gray-400 absolute right-2 top-6" />
@@ -197,6 +201,14 @@
               </button>
             </div>
           </form>
+          <div v-else class="space-y-3">
+            <p class="pl-1 font-bold text-white bg-pink-600 rounded-md">
+              複数回失敗しました
+            </p>
+            <p class="pl-1 pr-1 font-bold text-white bg-pink-600 rounded-md">
+              メールアドレスとパスワードを確認してください
+            </p>
+          </div>
           <button class="absolute right-0 top-0" @click="signInModalToggle">
             <XCircleIcon class="h-6 w-6 text-pink-600" />
           </button>
@@ -222,7 +234,7 @@ const store = useStore()
 const signInModalState = computed(() => store.state.modal['signInModal'])
 const signInModalToggle = () => store.commit('SIGN_IN_MODAL_TOGGLE')
 
-const { errors, handleSubmit, isSubmitting } = useForm({
+const { errors, handleSubmit, isSubmitting, submitCount } = useForm({
   validationSchema: signInSchema,
   initialValues: {
     email: '',
@@ -232,6 +244,11 @@ const { errors, handleSubmit, isSubmitting } = useForm({
 
 const { handleChange: emailHandle } = useField('email')
 const { handleChange: passwordHandle } = useField('password')
+
+const isTooManyAttempts = computed(() => {
+  console.log(submitCount.value)
+  return submitCount.value >= 3
+})
 
 const signInLocal = handleSubmit((postData) =>
   store.dispatch('signInLocal', postData)
