@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply rounded-full border-2 font-bold ring-4 ring-yellow-600 p-1;
+}
+
+.btn-action {
+  @apply transition duration-500 transform hover:-translate-y-1;
+}
+
+.login-btn {
+  @apply border-2  ring-2 ring-gray-300 p-1 transition bg-gradient-to-r;
+}
+
+.form {
+  @apply w-full border border-gray-300 px-3 py-1 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
+}
+
+.active-link {
+  @apply border-b-4 border-yellow-500 text-white font-black;
+}
