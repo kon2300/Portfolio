@@ -25,11 +25,19 @@ module.exports = {
     timezone: '+09:00',
   },
   production: {
-    username: 'root',
-    password: undefined,
-    database: 'database_production',
-    host: '127.0.0.1',
+    username: process.env.PRODUCTION_USERNAME,
+    password: process.env.PRODUCTION_PASSWORD,
+    database: process.env.PRODUCTION_DATABASE,
+    host: process.env.PRODUCTION_HOST,
     dialect: 'mysql',
     timezone: '+09:00',
+    dialectOptions: {
+      typeCast: (field, next) => {
+        if (field.type === 'DATETIME' || field.type === 'TIMESTAMP') {
+          return new Date(`${field.string()} Z`)
+        }
+        return next()
+      },
+    },
   },
 }
