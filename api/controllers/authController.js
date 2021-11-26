@@ -78,7 +78,7 @@ module.exports = {
                 expiresIn: '60m',
               }
             )
-            res.redirect(`${process.env.APP_URL}/user-redirect/${jwtToken}/${user.id}`)
+            res.redirect(`${process.env.FRONT_APP_URL}/user-redirect/${jwtToken}/${user.id}`)
           }
         }
       })
@@ -94,7 +94,7 @@ module.exports = {
           expiresIn: '60m',
         }
       )
-      res.redirect(`${process.env.APP_URL}/user-redirect/${jwtToken}/${req.user[0].id}`)
+      res.redirect(`${process.env.FRONT_APP_URL}/user-redirect/${jwtToken}/${req.user[0].id}`)
     } else {
       res.json({ isAuthenticatedError: error })
     }
