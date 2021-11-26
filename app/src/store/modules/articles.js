@@ -37,12 +37,12 @@ export default {
       const res = await axios.post('articles/create', postData)
       store.commit('SET_ERROR_MESSAGE', res.data.error)
       if (!store.state.auth.error) {
-        router.push({ name: 'everybodys-posts' })
+        router.push({ name: 'everybodys-posts', params: { pageNumber: 1 } })
       }
     },
     updateArticle: async ({ state }, postData) => {
       await axios.put(`articles/${state.article.id}`, postData)
-      router.push({ name: 'everybodys-posts' })
+      router.push({ name: 'everybodys-posts', params: { pageNumber: 1 } })
     },
     showMyArticles: async ({ commit }, user_id) => {
       const res = await axios.get(`articles/showMyArticles/${user_id}`)
@@ -79,7 +79,7 @@ export default {
       if (window.confirm('投稿した記事を削除しますか？')) {
         const res = await axios.delete(`articles/removeArticle/${article_id}`)
         console.log(res.data)
-        router.push({ name: 'everybodys-posts' })
+        router.push({ name: 'everybodys-posts', params: { pageNumber: 1 } })
       } else {
         window.alert('キャンセルしました。')
       }
