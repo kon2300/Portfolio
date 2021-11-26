@@ -62,7 +62,7 @@ passport.use(
     {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-      callbackURL: 'http://localhost:3000/auth/twitter/callback',
+      callbackURL: `${process.env.APP_URL}/auth/twitter/callback`,
       includeEmail: true,
     },
     async (token, tokenSecret, profile, done) => {
@@ -93,7 +93,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/github/callback',
+      callbackURL: `${process.env.APP_URL}/auth/github/callback`,
       scope: ['user:email'],
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -124,7 +124,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      callbackURL: `${process.env.APP_URL}/auth/google/callback`,
       scope: 'https://www.googleapis.com/auth/plus.login',
       scope: 'email',
     },
