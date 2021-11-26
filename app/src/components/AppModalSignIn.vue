@@ -23,7 +23,7 @@
           <div class="space-y-6 mb-6">
             <div class="relative">
               <a
-                href="http://localhost:3000/auth/twitter"
+                :href="`${baseUrl}/auth/twitter`"
                 class="
                   group
                   block
@@ -67,7 +67,7 @@
 
             <div class="relative">
               <a
-                href="http://localhost:3000/auth/github"
+                :href="`${baseUrl}/auth/github`"
                 class="
                   group
                   block
@@ -111,7 +111,7 @@
 
             <div class="relative">
               <a
-                href="http://localhost:3000/auth/google"
+                :href="`${baseUrl}/auth/google`"
                 class="
                   group
                   block
@@ -253,5 +253,8 @@ const isTooManyAttempts = computed(() => {
 const signInLocal = handleSubmit((postData) =>
   store.dispatch('signInLocal', postData)
 )
+
+const baseUrl = computed(() => import.meta.env.VITE_API_URL)
+
 const error = computed(() => store.state.auth['error'])
 </script>
