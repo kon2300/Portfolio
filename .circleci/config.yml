@@ -1,13 +1,22 @@
 version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.0.0
+
 jobs:
   deploy_api:
     docker:
       - image: docker:stable-git
     steps:
+      - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
-            - "d4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44"
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd Portfolio && git pull origin main'
+            - 'd4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44'
+      - run:
+          name: deploy
+          command: |
+            ./deploy.sh
+
 workflows:
   build_and_deploy:
     jobs:
