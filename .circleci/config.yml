@@ -1,27 +1,23 @@
 version: 2.1
-  # deploy ジョブ: EC2 に SSH 接続して、デプロイを実行する
-  deploy:
-    machine:
-      image: circleci/classic:edge
+jobs:
+  build:
+    # pre-built images: https://circleci.com/docs/2.0/circleci-images/
+    docker:
+      - image: circleci/node:14-browsers
     steps:
       - checkout
-      # CircleCI に登録した秘密鍵を呼び出す
-      - add_ssh_keys:
-      # CircleCI に登録した環境変数を使って SSH
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd Portfolio && git pull origin main'
-
-workflows:
-  version: 2.1
-  # build_and_deploy ジョブ: 一番最初に呼ばれるジョブ
-  build_and_deploy:
-    # build ジョブと deploy ジョブを登録する
-    jobs:
-      - build
-      - deploy:
-          requires:
-            # 依存性あるから deploy ジョブより先に build ジョブを実行してね、という命令
-            - cd app yarn build
-          # master ブランチに push された場合のみ deploy ジョブを実行する
-          filters:
-            branches:
-              only: main
+      - run:
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+      - run:
+          name: Code Has Arrived
+          command: |
+            ls -al
+            echo '^^^That should look familiar^^^'
+    
+      - run:
+          name: Running in a Unique Container
+          command: |
+            node -v
