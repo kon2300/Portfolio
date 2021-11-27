@@ -7,6 +7,7 @@ jobs:
       - image: docker:stable-git
     steps:
       - checkout
+      - aws-cli/install
       - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
