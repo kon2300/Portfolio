@@ -1,27 +1,26 @@
 version: 2.1
-  # deploy ジョブ: EC2 に SSH 接続して、デプロイを実行する
-  deploy:
-    machine:
-      image: circleci/classic:edge
+
+orbs:
+  aws-cli: circleci/aws-cli@2.0.0
+
+jobs:
+  deploy_api:
+    docker:
+      - image: docker:stable-git
     steps:
-      - checkout
-      # CircleCI に登録した秘密鍵を呼び出す
+      - aws-cli/setup
       - add_ssh_keys:
-      # CircleCI に登録した環境変数を使って SSH
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd Portfolio && git pull origin main'
+          fingerprints:
+            - 'd4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44'
+      - run:
+          name: deploy
+          command: |
+            ./deploy.sh
 
 workflows:
-  version: 2.1
-  # build_and_deploy ジョブ: 一番最初に呼ばれるジョブ
   build_and_deploy:
-    # build ジョブと deploy ジョブを登録する
     jobs:
-      - build
-      - deploy:
-          requires:
-            # 依存性あるから deploy ジョブより先に build ジョブを実行してね、という命令
-            - cd app yarn build
-          # master ブランチに push された場合のみ deploy ジョブを実行する
+      - deploy_api:
           filters:
             branches:
               only: main
