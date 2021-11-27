@@ -1,13 +1,12 @@
 version: 2.1
-
 orbs:
-  aws-cli: circleci/aws-cli@2.0.0
-
+  aws-cli: circleci/aws-cli@2.0.6
 jobs:
   deploy_api:
     docker:
       - image: docker:stable-git
     steps:
+      - checkout
       - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
@@ -16,7 +15,6 @@ jobs:
           name: deploy
           command: |
             ./deploy.sh
-
 workflows:
   build_and_deploy:
     jobs:
