@@ -1,23 +1,17 @@
 version: 2.1
 jobs:
-  build:
-    # pre-built images: https://circleci.com/docs/2.0/circleci-images/
+  deploy_api:
     docker:
-      - image: circleci/node:14-browsers
+      - image: docker:stable-git
     steps:
-      - checkout
-      - run:
-          name: The First Step
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
-      - run:
-          name: Code Has Arrived
-          command: |
-            ls -al
-            echo '^^^That should look familiar^^^'
-    
-      - run:
-          name: Running in a Unique Container
-          command: |
-            node -v
+      - add_ssh_keys:
+          fingerprints:
+            - "d4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44"
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd Portfolio && git pull origin main'
+workflows:
+  build_and_deploy:
+    jobs:
+      - deploy_api:
+          filters:
+            branches:
+              only: main
