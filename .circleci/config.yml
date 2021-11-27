@@ -4,7 +4,7 @@ orbs:
 jobs:
   deploy_api:
     docker:
-      - image: docker:stable-git
+      - image: cimg/node:17.1.0
     steps:
       - checkout
       - aws-cli/install
