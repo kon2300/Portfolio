@@ -9,7 +9,7 @@ jobs:
       - aws-cli/setup
       - add_ssh_keys:
           fingerprints:
-            - 'd4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44'
+            - 'f2:78:eb:b4:3c:b9:17:36:15:96:75:49:b3:e8:7b:c5'
       - run:
           name: deploy
           command: |
