@@ -30,6 +30,7 @@ jobs:
           command: |
             ./deploy.sh
   build_and_deploy_app:
+    working_directory: ~/app
     docker:
       - image: cimg/base:stable
     steps:
@@ -39,9 +40,11 @@ jobs:
           name: build
           command: yarn build
       - aws-s3/sync:
+          arguments: |
+            --delete
           from: dist
-          to: s3://kake-bo-s3
           overwrite: true
+          to: 's3://kake-bo-s3'
 
 workflows:
   build_and_deploy:
