@@ -16,9 +16,13 @@ jobs:
           command: |
             'pwd'
       - run:
+          name: pwd
+          command: |
+            'ls'
+      - run:
           name: deploy
           command: |
-            deploy.sh
+            ./deploy.sh
 workflows:
   build_and_deploy:
     jobs:
