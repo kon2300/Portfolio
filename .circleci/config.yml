@@ -1,6 +1,21 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0.6
+  aws-s3: circleci/aws-s3@3.0.0
+
+commands:
+  npm_install:
+    steps:
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install npm
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
 jobs:
   deploy_api:
     executor: aws-cli/default
@@ -14,10 +29,30 @@ jobs:
           name: deploy
           command: |
             ./deploy.sh
+  build_and_deploy_app:
+    working_directory: ~/app
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - npm_install
+      - run:
+          name: build
+          command: yarn build
+      - aws-s3/sync:
+          from: dist
+          to: 's3://kake-bo-s3'
+          arguments: |
+            --delete
+
 workflows:
   build_and_deploy:
     jobs:
       - deploy_api:
+          filters:
+            branches:
+              only: main
+      - build_and_deploy_app:
           filters:
             branches:
               only: main
