@@ -13,7 +13,7 @@ jobs:
       - run:
           name: ls
           command: |
-            'ls'
+            'ls -l'
       - run:
           name: deploy
           command: |
