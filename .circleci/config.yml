@@ -14,7 +14,7 @@ commands:
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
-              - node_modules
+            - node_modules
 
 jobs:
   deploy_api:
@@ -30,15 +30,18 @@ jobs:
           command: |
             ./deploy.sh
   build_and_deploy_app:
-    - checkout
-    - npm_install
-    - run:
-        name: build
-        command: yarn build
-    - aws-s3/sync:
-        from: dist
-        to: s3://kake-bo-s3
-        overwrite true
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - npm_install
+      - run:
+          name: build
+          command: yarn build
+      - aws-s3/sync:
+          from: dist
+          to: s3://kake-bo-s3
+          overwrite: true
 
 workflows:
   build_and_deploy:
