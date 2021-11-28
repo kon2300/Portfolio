@@ -11,9 +11,9 @@ jobs:
           fingerprints:
             - 'd4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44'
       - run:
-          name: ls
+          name: allow_permission
           command: |
-            'ls -l'
+            'chmod 700 ./deploy.sh'
       - run:
           name: deploy
           command: |
