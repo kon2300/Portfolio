@@ -3,8 +3,7 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.6
 jobs:
   deploy_api:
-    docker:
-      - image: cimg/node:17.1.0
+    executor: aws-cli/default
     steps:
       - checkout
       - aws-cli/install
@@ -12,6 +11,10 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - 'd4:7b:88:4a:83:f7:3d:ec:4f:20:75:22:45:11:98:44'
+      - run:
+          name: pwd
+          command: |
+            'pwd'
       - run:
           name: deploy
           command: |
