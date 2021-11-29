@@ -35,6 +35,8 @@ jobs:
     steps:
       - checkout
       - run: cd app
+      - run: pwd
+      - run: ls
       - npm_install
       - run:
           name: build
