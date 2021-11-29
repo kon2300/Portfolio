@@ -36,11 +36,10 @@ jobs:
     steps:
       - checkout
       - npm_install
-      - run: pwd
+      - run: pwd && ls
       - run:
           name: build
           command: yarn build
-          working_directory: ~/app
       - aws-s3/sync:
           from: dist
           to: 's3://kake-bo-s3'
