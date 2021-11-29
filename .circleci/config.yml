@@ -34,9 +34,7 @@ jobs:
       - image: cimg/node:17.1.0
     steps:
       - checkout
-      - run: cd app
-      - run: pwd
-      - run: ls
+      working_directory: ~/app
       - npm_install
       - run:
           name: build
