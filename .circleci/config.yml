@@ -3,6 +3,19 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.6
   aws-s3: circleci/aws-s3@3.0.0
 
+commands:
+  npm_install:
+    steps:
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install npm
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
 jobs:
   deploy_api:
     executor: aws-cli/default
@@ -19,9 +32,10 @@ jobs:
   build_and_deploy_app:
     working_directory: ~/app
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:17.1.0
     steps:
       - checkout
+      - npm_install
       - run:
           name: build
           command: yarn build
