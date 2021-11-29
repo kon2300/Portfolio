@@ -30,6 +30,7 @@ jobs:
           command: ls && yarn build
           working_directory: /home/circleci/project/app
       - aws-s3/sync:
+          command: pwd && ls
           from: dist
           to: 's3://kake-bo-s3'
           arguments: |
