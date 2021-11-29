@@ -67,13 +67,13 @@ export default {
       console.log(res.data)
       commit('SET_ARTICLE', res.data)
     },
-    likeArticle: async ({ dispatch }, { article_id, user_id }) => {
+    likeArticle: async ({ state, dispatch }, { article_id, user_id }) => {
       await axios.post(`articles/likeArticle/${article_id}/${user_id}`)
-      dispatch('showAllArticles')
+      dispatch('showAllArticles', state.searchValues)
     },
-    removeLikeArticle: async ({ dispatch }, { article_id, user_id }) => {
+    removeLikeArticle: async ({ state, dispatch }, { article_id, user_id }) => {
       await axios.delete(`articles/removeLikeArticle/${article_id}/${user_id}`)
-      dispatch('showAllArticles')
+      dispatch('showAllArticles', state.searchValues)
     },
     removeArticle: async (_, article_id) => {
       if (window.confirm('投稿した記事を削除しますか？')) {
