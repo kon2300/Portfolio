@@ -26,11 +26,11 @@ jobs:
           command: yarn install
           working_directory: /home/circleci/project/app
       - run:
-          name: ls
-          command: ls
+          name: touch .env
+          command: touch .env
           working_directory: /home/circleci/project/app
       - run:
-          name: create .env
+          name: write .env
           command: echo VITE_API_URL=${VITE_API_URL} > /.env
           working_directory: /home/circleci/project/app
       - run:
