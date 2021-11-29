@@ -30,16 +30,16 @@ jobs:
           command: |
             ./deploy.sh
   build_and_deploy_app:
-    working_directory: ~/app
     docker:
       - image: cimg/node:17.1.0
     steps:
       - checkout
+      - run: cd app
       - npm_install
       - run: pwd && ls
       - run:
           name: build
-          command: yarn build
+          command: cd app && yarn build
       - aws-s3/sync:
           from: dist
           to: 's3://kake-bo-s3'
