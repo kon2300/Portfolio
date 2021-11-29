@@ -30,12 +30,13 @@ jobs:
           command: |
             ./deploy.sh
   build_and_deploy_app:
-    working_directory: ~/app
     docker:
       - image: cimg/node:17.1.0
     steps:
       - checkout
       - npm_install
+      - run: pwd
+      - run: ls
       - run:
           name: build
           command: yarn build
