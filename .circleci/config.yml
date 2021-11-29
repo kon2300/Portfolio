@@ -28,7 +28,13 @@ jobs:
       - run:
           name: create .env
           command: |
+            touch .env
+          working_directory: /home/circleci/project/app
+      - run:
+          name: write .env
+          command: |
             ls -l
+            chown -R $USER:$USER .env
             echo VITE_API_URL=${VITE_API_URL} > /.env
           working_directory: /home/circleci/project/app
       - run:
