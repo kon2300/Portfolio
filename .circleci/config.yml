@@ -3,19 +3,6 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.6
   aws-s3: circleci/aws-s3@3.0.0
 
-commands:
-  npm_install:
-    steps:
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install npm
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-
 jobs:
   deploy_api:
     executor: aws-cli/default
@@ -34,12 +21,14 @@ jobs:
       - image: cimg/node:17.1.0
     steps:
       - checkout
-      - run: cd app
-      - npm_install
-      - run: pwd && ls
+      - run:
+        name: node_modules install
+        command: yarn install
+        working_directory: /home/circleci/project/app
       - run:
           name: build
-          command: cd app && yarn build
+          command: ls && yarn build
+          working_directory: /home/circleci/project/app
       - aws-s3/sync:
           from: dist
           to: 's3://kake-bo-s3'
