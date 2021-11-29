@@ -22,11 +22,13 @@ jobs:
     steps:
       - checkout
       - run:
-        name: node_modules install
-        command: cd app && yarn install
+          name: node_modules install
+          command: yarn install
+          working_directory: /home/circleci/project/app
       - run:
           name: build
-          command: cd app && yarn build
+          command: ls && yarn build
+          working_directory: /home/circleci/project/app
       - aws-s3/sync:
           from: dist
           to: 's3://kake-bo-s3'
