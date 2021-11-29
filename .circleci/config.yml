@@ -27,7 +27,9 @@ jobs:
           working_directory: /home/circleci/project/app
       - run:
           name: build
-          command: ls && yarn build
+          command: |
+            echo VITE_API_URL=${VITE_API_URL} > /.env
+            yarn build
           working_directory: /home/circleci/project/app
       - aws-s3/sync:
           from: /home/circleci/project/app/dist
