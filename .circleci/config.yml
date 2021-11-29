@@ -6,6 +6,7 @@ orbs:
 commands:
   npm_install:
     steps:
+      working_directory: ~/app
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -34,7 +35,6 @@ jobs:
       - image: cimg/node:17.1.0
     steps:
       - checkout
-      working_directory: ~/app
       - npm_install
       - run:
           name: build
