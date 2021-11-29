@@ -5,8 +5,8 @@ orbs:
 
 commands:
   npm_install:
+    working_directory: ~/app
     steps:
-      working_directory: ~/app
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
