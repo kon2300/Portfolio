@@ -11,7 +11,7 @@
 
 ### URL
 
-[URL](https://kake-bo.ml)
+![家計簿投稿アプリケーション](https://kake-bo.ml)
 
 ## Use of technology
 
@@ -39,7 +39,7 @@
 
 ## NW Configuration diagram
 
-[kake-boNW 構成図.pdf](https://github.com/kon2300/Portfolio/files/7621847/kake-boNW.pdf)
+![kake-boNW 構成図.pdf](https://github.com/kon2300/Portfolio/files/7621847/kake-boNW.pdf)
 
 ### Circle CI/CD
 
@@ -48,11 +48,11 @@
 
 ## Function List
 
-[kake-bo 機能一覧.pdf](https://github.com/kon2300/Portfolio/files/7621838/kake-bo.pdf)
+![kake-bo 機能一覧.pdf](https://github.com/kon2300/Portfolio/files/7621838/kake-bo.pdf)
 
 ## Database ER Configuration diagram
 
-[kake-boER 図.pdf](https://github.com/kon2300/Portfolio/files/7621853/kake-boER.pdf)
+![kake-boER 図.pdf](https://github.com/kon2300/Portfolio/files/7621853/kake-boER.pdf)
 
 ## Author
 
