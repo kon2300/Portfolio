@@ -11,7 +11,7 @@
 
 ### URL
 
-![家計簿投稿アプリケーション](https://kake-bo.ml)
+[家計簿投稿アプリケーション](https://kake-bo.ml)
 
 ## Use of technology
 
@@ -48,7 +48,7 @@
 
 ## Function List
 
-![kake-bo機能一覧](https://user-images.githubusercontent.com/74819209/143965588-dbf37b77-144d-40d1-bca9-48e2c352274d.png)
+![kake-bo機能一覧](https://user-images.githubusercontent.com/74819209/143966471-b9e4fed6-c8b5-4d78-a34e-08b462e20dd2.png)
 
 ## Database ER Configuration diagram
 
