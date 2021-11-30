@@ -1,49 +1,58 @@
-# KAKE-BO(Portfolio)
+# KAKE-BO
 
-- ポートフォリオです。
+![kake-boPreview](https://user-images.githubusercontent.com/74819209/143963410-deda5728-ca99-46a9-9ff5-9d4854e8150d.gif)
 
 ## Description
 
-- 家計簿を公開するアプリケーションです
+- 家計簿を投稿・共有するアプリケーションです。
+- 支出を視覚化し、日々の節約を意識づけます
+- また、他の方の支出も閲覧できるので、節約の参考にすることができます。
+- ※レスポンシブ対応済
 
-- **[Docker](https://www.docker.com/products/docker-desktop)** を使用し、バックエンドは **[Node.js](https://nodejs.org/ja/)** 、データベースは **[Mysql](https://www.mysql.com/jp/)** 、フロントは **[Vue.js](https://v3.ja.vuejs.org/)** を使用しています
+### URL
 
-## Requirement
+[URL](https://kake-bo.ml)
 
-- [Docker](https://www.docker.com/products/docker-desktop)/docker-compose 3.8
+## Use of technology
 
-## Usage
+### Development Environment
 
-### 開発環境の立ち上げ
+- Docker/Docker-compose
 
-1. `.env` ファイル を作成します
+### Production environments
 
-   ```sh
-   $ cp api/.env.example .env
-   $ cp db/.env.example .env
-   ```
+- Vue 3 (Vite)
+- Express 4.16.1
+- MySQL 5.7
+- AWS
 
-1. イメージを構築するため [Docker](https://www.docker.com/products/docker-desktop) をインストールし `docker-compose.yml` のある場所で下記のコマンドを実行します
+  - VPC
+  - IAM
+  - EC2
+  - RDS
+  - S3
+  - CloudFront
+  - Route 53
+  - Certificate Manager
 
-   ```sh
-   $ docker-compose build
-   ```
+- Circle CI/CD
 
-1. コンテナを起動するため `docker-compose.yml` のある場所で下記のコマンドを実行します
+## NW Configuration diagram
 
-   ```sh
-   $ docker-compose up
-   ```
+[kake-boNW 構成図.pdf](https://github.com/kon2300/Portfolio/files/7621847/kake-boNW.pdf)
 
-### 開発環境のマイグレーション
+### Circle CI/CD
 
-※ 上記開発環境立ち上げ後に実行してください
+- main ブランチへマージされると、EC2 へ自動デプロイされます。
+- 併せて、S3 へ、自動ビルドされたコードが自動アップロードされます。
 
-1. sequelize を使用しマイグレーションします
+## Function List
 
-   ```sh
-   $ npx sequelize-cli db:migrate
-   ```
+[kake-bo 機能一覧.pdf](https://github.com/kon2300/Portfolio/files/7621838/kake-bo.pdf)
+
+## Database ER Configuration diagram
+
+[kake-boER 図.pdf](https://github.com/kon2300/Portfolio/files/7621853/kake-boER.pdf)
 
 ## Author
 
