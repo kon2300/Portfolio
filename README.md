@@ -39,7 +39,7 @@
 
 ## NW Configuration diagram
 
-![kake-boNW 構成図.pdf](https://github.com/kon2300/Portfolio/files/7621847/kake-boNW.pdf)
+![kake-boNW構成図](https://user-images.githubusercontent.com/74819209/143965547-3da318f7-4dd7-4e91-b601-5d3c81349dcc.png)
 
 ### Circle CI/CD
 
@@ -48,11 +48,11 @@
 
 ## Function List
 
-![kake-bo 機能一覧.pdf](https://github.com/kon2300/Portfolio/files/7621838/kake-bo.pdf)
+![kake-bo機能一覧](https://user-images.githubusercontent.com/74819209/143965588-dbf37b77-144d-40d1-bca9-48e2c352274d.png)
 
 ## Database ER Configuration diagram
 
-![kake-boER 図.pdf](https://github.com/kon2300/Portfolio/files/7621853/kake-boER.pdf)
+![kake-boER図](https://user-images.githubusercontent.com/74819209/143965469-5aa3dee0-3b40-4e95-8419-92e985b2d9b0.png)
 
 ## Author
 
