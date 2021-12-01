@@ -43,10 +43,9 @@
               </div>
               <div class="pt-1">
                 <span class="text-xl">{{ article.name }} </span>
-                <span class="text-xs">@{{ article.user_id }}</span>
               </div>
               <div class="pt-1">
-                <span>月収:{{ article.annual_income }}</span>
+                <span>年収:{{ article.annual_income }}</span>
               </div>
               <div class="pt-1">
                 <span>世帯人数:{{ article.family_members }}</span>
