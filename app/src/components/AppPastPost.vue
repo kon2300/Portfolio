@@ -247,7 +247,7 @@ import { useStore } from 'vuex'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { renderChartDougnut } from '@/include/chart'
 
-const router = useRouter
+const router = useRouter()
 const store = useStore()
 onMounted(() => {
   const postData = {
