@@ -46,6 +46,13 @@ export default {
       commit('SET_ERROR_MESSAGE', res.data.error)
       try {
         dispatch('attempt', res.data.jwtToken)
+        if (res.data.jwtToken) {
+          store.commit('SIGN_IN_MODAL_TOGGLE')
+          router.push({
+            name: 'user-redirect',
+            params: { token: res.data.jwtToken, id: res.data.userid },
+          })
+        }
       } catch (e) {
         commit('SET_TOKEN', '')
         commit('SET_USER', '')

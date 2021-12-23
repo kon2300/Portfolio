@@ -39,11 +39,12 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      await User.findOne({
-        where: {
-          email: email,
-        },
-      })
+      await User.unscoped()
+        .findOne({
+          where: {
+            email: email,
+          },
+        })
         .then((user) => {
           if (user && bcrypt.compareSync(password, user.password)) {
             return done(null, user)

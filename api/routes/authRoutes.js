@@ -1,4 +1,6 @@
+require('dotenv').config()
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 const authController = require('../controllers/authController')
 const passport = require('../utils/auth')
@@ -7,14 +9,23 @@ router.post('/signUp', authController.createUser)
 
 router.get('/verifyUser/:id/:hash', authController.verifyUser)
 
-router.post(
-  '/signIn',
-  passport.authenticate('local', {
-    passReqToCallback: true,
-    successRedirect: '/auth/isAuthenticated',
-    failureRedirect: '/auth/error',
-  })
-)
+router.post('/signIn', passport.authenticate('local', { failureRedirect: '/auth/error' }), (req, res, next) => {
+  const userid = req.user.id
+  if (req.isAuthenticated()) {
+    const jwtToken = jwt.sign(
+      {
+        userid: userid,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '60m',
+      }
+    )
+    res.json({ jwtToken, userid })
+  } else {
+    next(authController.error)
+  }
+})
 
 router.get('/verify', authController.verifyToken)
 
