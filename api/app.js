@@ -18,18 +18,18 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use(expressLayouts)
-app.use(cors())
+app.use(cors({ credentials: true, origin: process.env.FRONT_APP_URL, optionsSuccessStatus: 200 }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser('secret_passcode'))
+app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: {
-      maxAge: 60 * 60 * 500,
+      secure: 'auto',
     },
-    resave: false,
+    resave: true,
     saveUninitialized: false,
   })
 )

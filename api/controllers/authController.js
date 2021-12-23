@@ -84,17 +84,18 @@ module.exports = {
       })
   },
   isAuthenticated: (req, res) => {
+    const userid = req.user[0].id
     if (req.isAuthenticated()) {
       const jwtToken = jwt.sign(
         {
-          userid: req.user[0].id,
+          userid: userid,
         },
         process.env.JWT_SECRET,
         {
           expiresIn: '60m',
         }
       )
-      res.redirect(`${process.env.FRONT_APP_URL}/user-redirect/${jwtToken}/${req.user[0].id}`)
+      res.redirect(`${process.env.FRONT_APP_URL}/user-redirect/${jwtToken}/${userid}`)
     } else {
       res.json({ isAuthenticatedError: error })
     }
@@ -105,7 +106,7 @@ module.exports = {
         const bearToken = req.headers['authorization']
         const bearer = bearToken.split(' ')
         const token = bearer[1]
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
         res.json({ decoded })
       } else {
         res.json({ tokon: 'false' })
