@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-3 flex justify-center text-3xl">みんなの投稿</div>
+    <div class="p-3 flex justify-center font-black text-4xl">みんなの投稿</div>
     <div v-for="article in allArticle" :key="article.id">
       <div
         class="
@@ -322,7 +322,6 @@ const editArticle = (article_id) => {
 }
 
 onBeforeRouteUpdate((to, from, next) => {
-  console.log(postData.value)
   postData.value['page_number'] = to.params.pageNumber
   store.commit('DESTROY_CHART')
   store.dispatch('showAllArticles', postData.value)

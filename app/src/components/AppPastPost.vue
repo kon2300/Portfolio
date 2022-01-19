@@ -288,7 +288,6 @@ onBeforeRouteUpdate((to, from, next) => {
     page_number: to.params.pageNumber,
     user_id: user.value,
   }
-  console.log(postData)
   store.commit('DESTROY_CHART')
   store.dispatch('showMyAllArticle', postData)
   next()

@@ -246,7 +246,6 @@ const { handleChange: emailHandle } = useField('email')
 const { handleChange: passwordHandle } = useField('password')
 
 const isTooManyAttempts = computed(() => {
-  console.log(submitCount.value)
   return submitCount.value >= 3
 })
 

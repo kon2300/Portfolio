@@ -7,7 +7,6 @@ const transporter = require('../utils/nodemailer')
 
 module.exports = {
   createUser: async (req, res) => {
-    console.log(req.body)
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     await User.findOrCreate({
       where: { email: req.body.email },

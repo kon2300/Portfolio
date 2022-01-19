@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Profile',
       underscored: true,
       defaultScope: {
-        attributes: { exclude: ['id', 'updatedAt', 'createdAt'] },
+        attributes: { exclude: ['id'] },
       },
     }
   )

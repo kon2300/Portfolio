@@ -85,7 +85,6 @@ module.exports = {
           exclude: ['age', 'annual_income', 'family_members', 'id', 'name', 'updatedAt', 'user_id', 'comment'],
         },
       })
-      console.log(result)
       res.json(result)
     } catch (error) {
       res.json({ showMyArticlesError: error })
