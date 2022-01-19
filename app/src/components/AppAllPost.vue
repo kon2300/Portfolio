@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="p-3 flex justify-center font-black text-4xl">みんなの投稿</div>
+    <div v-if="searchResult" class="flex justify-center font-black text-2xl">
+      {{ searchResult }}
+    </div>
     <div v-for="article in allArticle" :key="article.id">
       <div
         class="
@@ -327,6 +330,8 @@ onBeforeRouteUpdate((to, from, next) => {
   store.dispatch('showAllArticles', postData.value)
   next()
 })
+
+const searchResult = computed(() => store.state.articles.searchResult)
 </script>
 
 <style></style>
