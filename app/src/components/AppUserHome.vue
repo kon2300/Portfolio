@@ -64,7 +64,6 @@ onMounted(async () => {
     0
   )
   if (myArticles.value.length) {
-    console.log('my')
     renderTotalSpending('canvas1', totalSpendingData)
   }
 

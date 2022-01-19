@@ -6,6 +6,7 @@ export default {
   state: {
     allArticle: [],
     allArticleCount: undefined,
+    searchResult: undefined,
     myAllArticle: [],
     myAllArticleCount: undefined,
     article: [],
@@ -17,6 +18,9 @@ export default {
     },
     SET_ALL_ARTICLE_COUNT(state, value) {
       state.allArticleCount = value
+    },
+    SET_SEARCH_RESULT(state, value) {
+      state.searchResult = value
     },
     SET_MY_ALL_ARTICLE(state, value) {
       state.myAllArticle = value
@@ -58,6 +62,7 @@ export default {
       commit('SET_SEARCH_VALUES', postData)
       commit('SET_ALL_ARTICLE', res.data.rows)
       commit('SET_ALL_ARTICLE_COUNT', res.data.count)
+      commit('SET_SEARCH_RESULT', res.data.result)
     },
     editArticle: async ({ commit }, article_id) => {
       const res = await axios.get(`articles/editArticle/${article_id}`)

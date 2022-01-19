@@ -140,6 +140,7 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
+        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age && req.body.family_members) {
@@ -162,6 +163,7 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
+        result['result'] = `[${req.body.age}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age && req.body.annual_income && req.body.family_members) {
@@ -185,6 +187,7 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
+        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age || req.body.annual_income || req.body.family_members) {
@@ -210,6 +213,13 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
+        if (req.body.age) {
+          result['result'] = `[${req.body.age}]の検索結果は${result['count']}件です`
+        } else if (req.body.annual_income) {
+          result['result'] = `[${req.body.annual_income}]の検索結果は${result['count']}件です`
+        } else if (req.body.family_members) {
+          result['result'] = `[${req.body.family_members}]の検索結果は${result['count']}件です`
+        }
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else {
