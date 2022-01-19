@@ -136,7 +136,6 @@ const { handleChange: annualIncomeHandle } = useField('annual_income')
 const { handleChange: familyMembersHandle } = useField('family_members')
 
 const searchArticles = handleSubmit((postData) => {
-  console.log(postData)
   postData['page_number'] = 1
   store.dispatch('showAllArticles', postData)
   store.commit('DESTROY_CHART')

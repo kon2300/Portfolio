@@ -97,6 +97,20 @@
           </p>
         </div>
 
+        <div>
+          <label for="created_at" class="block text-sm font-bold text-gray-700"
+            >登録日時</label
+          >
+          {{ profile.createdAt }}
+        </div>
+
+        <div>
+          <label for="created_at" class="block text-sm font-bold text-gray-700"
+            >更新日時</label
+          >
+          {{ profile.updatedAt }}
+        </div>
+
         <div class="grid justify-items-center">
           <button class="btn btn-action mb-2" :disabled="isSubmitting">
             編集完了
@@ -152,7 +166,6 @@ const userId = computed(() => store.state.auth.user)
 
 const updateProfile = handleSubmit((postData) => {
   postData['user_id'] = userId.value
-  console.log(postData)
   store.dispatch('updateProfile', postData)
 })
 </script>

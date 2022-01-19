@@ -35,7 +35,6 @@ module.exports = {
       const result = await Profile.findOne({
         where: { user_id: req.params.userId },
       })
-      console.log(result)
       res.json(result)
     } catch (error) {
       res.json({ showProfileError: error })

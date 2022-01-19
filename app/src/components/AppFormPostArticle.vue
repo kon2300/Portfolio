@@ -290,7 +290,6 @@ const postArticle = handleSubmit((postData) => {
   postData['age'] = detail.value.age
   postData['annual_income'] = detail.value.annual_income
   postData['family_members'] = detail.value.family_members
-  console.log(postData)
   store.dispatch('postArticle', postData)
 })
 const error = computed(() => store.state.auth['error'])

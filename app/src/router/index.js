@@ -12,7 +12,6 @@ const routes = [
     name: 'everybodys-posts',
     component: () => import('@/views/EverybodysPosts.vue'),
     beforeEnter: (to, from) => {
-      console.log(store.state.articles.searchValue)
       if (!store.state.articles.searchValue) {
         const postData = {
           age: '',
@@ -59,7 +58,6 @@ const routes = [
     meta: { requireAuth: true },
     beforeEnter: (to, from) => {
       store.dispatch('editArticle', to.params.id)
-      console.log(to.params.id)
     },
   },
   {
