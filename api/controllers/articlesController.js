@@ -120,11 +120,12 @@ module.exports = {
     const page = req.body.page_number
     const parpage = 2
     try {
-      if (req.body.age && req.body.annual_income) {
+      if (req.body.age && req.body.annual_income && req.body.family_members) {
         const result = await Article.findAndCountAll({
           where: {
             age: req.body.age,
             annual_income: req.body.annual_income,
+            family_members: req.body.family_members,
           },
           include: [
             {
@@ -140,7 +141,7 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
-        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]の検索結果は${result['count']}件です`
+        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age && req.body.family_members) {
@@ -166,10 +167,9 @@ module.exports = {
         result['result'] = `[${req.body.age}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
-      } else if (req.body.age && req.body.annual_income && req.body.family_members) {
+      } else if (req.body.annual_income && req.body.family_members) {
         const result = await Article.findAndCountAll({
           where: {
-            age: req.body.age,
             annual_income: req.body.annual_income,
             family_members: req.body.family_members,
           },
@@ -187,7 +187,30 @@ module.exports = {
           offset: (page - 1) * parpage,
           limit: parpage,
         })
-        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
+        result['result'] = `[${req.body.annual_income}]で[${req.body.family_members}]の検索結果は${result['count']}件です`
+        result['count'] = Math.ceil(result['count'] / parpage)
+        res.json(result)
+      } else if (req.body.age && req.body.annual_income) {
+        const result = await Article.findAndCountAll({
+          where: {
+            age: req.body.age,
+            annual_income: req.body.annual_income,
+          },
+          include: [
+            {
+              model: User,
+              as: 'like',
+              attributes: ['id'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+          order: [['updatedAt', 'DESC']],
+          offset: (page - 1) * parpage,
+          limit: parpage,
+        })
+        result['result'] = `[${req.body.age}]で[${req.body.annual_income}]の検索結果は${result['count']}件です`
         result['count'] = Math.ceil(result['count'] / parpage)
         res.json(result)
       } else if (req.body.age || req.body.annual_income || req.body.family_members) {
